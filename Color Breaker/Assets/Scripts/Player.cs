@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private int currIndex = 0;
     MaterialPropertyBlock matBlock;
     Renderer rend;
+    public float speed = 1;
 
 
     // Start is called before the first frame update
@@ -22,6 +23,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Move player forward
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+/*
         if(Input.GetKeyDown(KeyCode.K))
         {
             ++currIndex;
@@ -32,14 +37,21 @@ public class Player : MonoBehaviour
             matBlock.SetColor("_BaseColor", colors[currIndex]);
             rend.SetPropertyBlock(matBlock);
         }
-        
+*/      
     }
 
+    // Depricated
     public void SetColors(Color[] inputColors)
     {
         colors = inputColors;
         colorCount = inputColors.Length;
         matBlock.SetColor("_BaseColor", colors[currIndex]);
+        rend.SetPropertyBlock(matBlock);
+    }
+
+    public void UpdateColor(Color color)
+    {
+        matBlock.SetColor("_BaseColor", color);
         rend.SetPropertyBlock(matBlock);
     }
 }
