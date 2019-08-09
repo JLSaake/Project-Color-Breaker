@@ -8,29 +8,28 @@ public class GameManager : MonoBehaviour
     // TEMP
     public Blocker blocker;
 
-    public Player player;
+    private Player player; // Player object
+    private Camera mainCam; // Main camera that follows player
+    private Vector3 camOffset; // Offset of the camera from the player
     public Color[] colors; // Location for all colors in the game
-    private int currIndex = 0; // Current color index
-
-    public Camera mainCam;
-
-    Vector3 camOffset;
+    private int currIndex = 0; // Current color selected
 
     // Start is called before the first frame update
     void Start()
     {
-        _ColorCheck(); // Assert that there are ample colors in the game
+        _ColorCheck(); // Assert that there are enough colors in the game
         player = GameObject.FindObjectOfType<Player>();
         player.UpdateColor(colors[currIndex]);
 
-//        player.SetColors(colors); // TODO: move exculusively out of Player
         mainCam = Camera.main;
         camOffset = player.transform.position - mainCam.transform.position;
         
 
-        // TEMP - all hard coded for now
+        // TEMP - all hard coded for now, and for one variable
         blocker.SetColor(colors[1], 0.5f);
         Blocker.UpdateTransparentColor(colors[currIndex]);
+
+        // TODO: add first blocker, alwyas controlled by GameManager, to be second color
 
     }
 
@@ -59,6 +58,7 @@ public class GameManager : MonoBehaviour
     {
         if (colors.Length < 1) // TODO: change to 2 to prevent infinite gameplay
         {
+            Debug.LogWarning("ColorWarning: Insufficient colors set on instantiation of GameManager. Switching to defaults.");
             colors = new Color[2];
             colors[0] = Color.white;
             colors[1] = Color.black;
