@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         // TODO: add first blocker, alwyas controlled by GameManager, to be second color
 
         // TEMP - Testing ProceduralGenerator
-        pg.GenerateChunk(80, 2000, 15, 0.45f);
+        pg.GenerateChunk(80, 2000, 15, 0.5f);
 
     }
 
@@ -93,8 +93,19 @@ public class GameManager : MonoBehaviour
         // Camera follow player
         mainCam.transform.position = player.transform.position - camOffset;
 
+        bool newTouch = false;    
+
+        foreach (Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Began)
+            {
+                newTouch = true;
+                break;
+            }
+        }
+
         // Input to change color
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || newTouch)
         {
             materials[currIndex].SetColor("_BaseColor", colors[currIndex]);
             ++currIndex;
