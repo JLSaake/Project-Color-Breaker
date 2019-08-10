@@ -23,7 +23,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Move player forward
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);    
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);   
+
+        if (transform.position.z > 2050)
+        {
+            StartCoroutine("TempRestart");
+        } 
     }
 
     // Changes the player color
@@ -31,5 +36,20 @@ public class Player : MonoBehaviour
     {
         matBlock.SetColor("_BaseColor", color);
         rend.SetPropertyBlock(matBlock);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision");
+        StartCoroutine("TempRestart");
+    }
+
+    IEnumerator TempRestart()
+    {
+        float s = speed;
+        transform.position = Vector3.zero;
+        speed = 0;
+        yield return new WaitForSeconds(5f);
+        speed = s;
     }
 }
