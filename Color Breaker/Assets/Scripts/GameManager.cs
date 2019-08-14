@@ -28,6 +28,27 @@ public class GameManager : MonoBehaviour
 
     public Material[] materials;
 
+
+    #region Procedural Variables
+
+    private int currStartZ;
+    private int currEndZ;
+    private int currStep;
+    private float currFrequency;
+
+    public int zStartPos = 200;
+    public int zChunkLength = 800;
+    public int startingStep = 60;
+    public int stepDecreaseRate = 5;
+    public int stepMin = 30;
+    public float startFrequency = 0.5f;
+    public float frequencyIncreaseRate = 0.05f;
+    public float frequencyMax = 0.8f;
+
+    public int playerZDistanceToGenerateChunk = 800;
+
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +96,13 @@ public class GameManager : MonoBehaviour
         }
         materials[currIndex].SetColor("_BaseColor", colorsAlpha[currIndex]);
 
+        currStartZ = zStartPos;
+        currStep = startingStep;
+        currEndZ = currStartZ + zChunkLength;
+        currFrequency = startFrequency;
+        
+        pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency);
+
 
         // TEMP - all hard coded for now, and for one variable
         blocker.SetColor(colors[1]);
@@ -83,7 +111,7 @@ public class GameManager : MonoBehaviour
         // TODO: add first blocker, alwyas controlled by GameManager, to be second color
 
         // TEMP - Testing ProceduralGenerator
-        pg.GenerateChunk(80, 2000, 15, 0.5f);
+        // pg.GenerateChunk(200, 4000, 40, 0.66f);
 
     }
 
@@ -94,6 +122,14 @@ public class GameManager : MonoBehaviour
         mainCam.transform.position = player.transform.position - camOffset;
 
         bool newTouch = false;    
+
+        // If the player is within range to generate a new chunk
+        if (player.transform.position.z + playerZDistanceToGenerateChunk >= currEndZ)
+        {
+            CalculateChunk();
+            pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency);
+        }
+
 
         foreach (Touch touch in Input.touches)
         {
@@ -130,5 +166,24 @@ public class GameManager : MonoBehaviour
             colors[0] = Color.white;
             colors[1] = Color.black;
         }
+    }
+
+    private void CalculateChunk()
+    {
+        currStartZ = currEndZ;
+        currStep -= stepDecreaseRate;
+        if (currStep < stepMin)
+        {
+            currStep = stepMin;
+        }
+        currEndZ = currStartZ + zChunkLength;
+        currFrequency += frequencyIncreaseRate;
+        if (currFrequency > frequencyMax)
+        {
+            currFrequency = frequencyMax;
+        }
+
+        Debug.Log(currStartZ + " / " + currEndZ + " / " + currStep + " / " + currFrequency);
+
     }
 }

@@ -25,10 +25,12 @@ public class Player : MonoBehaviour
         // Move player forward
         transform.Translate(Vector3.forward * speed * Time.deltaTime);   
 
-        if (transform.position.z > 2050)
+        /*
+        if (transform.position.z > 4050)
         {
             StartCoroutine("TempRestart");
         } 
+        */
     }
 
     // Changes the player color
@@ -40,7 +42,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision");
+        // Debug.Log("Collision");
         StartCoroutine("TempRestart");
     }
 

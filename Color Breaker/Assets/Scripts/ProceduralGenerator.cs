@@ -6,6 +6,7 @@ public class ProceduralGenerator : MonoBehaviour
 {
 
     public Blocker blocker; // Blocker prefab to generate for level
+    public GameObject floor; // floor for game (set scale to chunk length)
     private Material[] materials; // Sent from GameManager, the materials to choose from for blockers
 
 
@@ -29,6 +30,11 @@ public class ProceduralGenerator : MonoBehaviour
         float currFrequency = frequency; // Option to make it more likely to spawn after failed spawns
         int currZ = startZ;
 
+        GameObject newFloor = Instantiate(floor);
+
+
+        currZ += step;
+
         do
         {
             if (SpawnCheck(currFrequency)) // If a blocker is going to be spawned
@@ -37,7 +43,7 @@ public class ProceduralGenerator : MonoBehaviour
 
             }
             currZ += step;
-        }   while (currZ <= endZ);
+        }   while (currZ + step <= endZ);
     }
 
     // Checks to see if a blocker should be spawned, given frequency
