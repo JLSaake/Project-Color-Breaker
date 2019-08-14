@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    private PauseMenuManager pm;
     private ProceduralGenerator pg; // Handles generation of blockers
     private Player player; // Player object
     private Camera mainCam; // Main camera that follows player
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     public float transparency = 0.5f; // Transparency value for materials
 
     public Material[] materials;
+
+    public bool isPaused = false;
 
 
     #region Procedural Variables
@@ -60,6 +63,7 @@ public class GameManager : MonoBehaviour
         camOffset = player.transform.position - mainCam.transform.position;
 
         pg = GameObject.FindObjectOfType<ProceduralGenerator>();
+        pm = GameObject.FindObjectOfType<PauseMenuManager>();
         
 
         // Handle color changing of materials
@@ -118,44 +122,70 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Camera follow player
-        mainCam.transform.position = player.transform.position - camOffset;
+        isPaused = pm.GetIsPaused();
 
-        bool newTouch = false;    
-
-        // If the player is within range to generate a new chunk
-        if (player.transform.position.z + playerZDistanceToGenerateChunk >= currEndZ)
+        if (player.GetPlayerIsAlive() && !isPaused)
         {
-            CalculateChunk();
-            pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency);
-        }
+            // Camera follow player
+            mainCam.transform.position = player.transform.position - camOffset;
 
 
-        foreach (Touch touch in Input.touches)
-        {
-            if (touch.phase == TouchPhase.Began)
+            // If the player is within range to generate a new chunk
+            if (player.transform.position.z + playerZDistanceToGenerateChunk >= currEndZ)
             {
-                newTouch = true;
-                break;
+                CalculateChunk();
+                pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency);
             }
-        }
 
-        // Input to change color
-        if (Input.GetKeyDown(KeyCode.Space) || newTouch)
-        {
-            materials[currIndex].SetColor("_BaseColor", colors[currIndex]);
-            ++currIndex;
-            if (currIndex >= colors.Length)
-            {
-                currIndex = 0;
-            }
-            materials[currIndex].SetColor("_BaseColor", colorsAlpha[currIndex]);
-            player.UpdateColor(colors[currIndex]);
-            Blocker.UpdateTransparentColor(colors[currIndex]);
             Blocker.UpdatePlayerPos(player.transform.position.z);
 
+
+            /*
+            bool newTouch = false;    
+            foreach (Touch touch in Input.touches)
+            {
+                if (touch.phase == TouchPhase.Began)
+                {
+                    newTouch = true;
+                    break;
+                }
+            }
+            */
+
+            /*
+            // Input to change color
+            if (Input.GetKeyDown(KeyCode.Space) || newTouch)
+            {
+                materials[currIndex].SetColor("_BaseColor", colors[currIndex]);
+                ++currIndex;
+                if (currIndex >= colors.Length)
+                {
+                    currIndex = 0;
+                }
+                materials[currIndex].SetColor("_BaseColor", colorsAlpha[currIndex]);
+                player.UpdateColor(colors[currIndex]);
+                Blocker.UpdateTransparentColor(colors[currIndex]);
+                Blocker.UpdatePlayerPos(player.transform.position.z);
+
+            }
+            */
         }
+        
     }
+
+    public void ToggleColor()
+    {
+        materials[currIndex].SetColor("_BaseColor", colors[currIndex]);
+        ++currIndex;
+        if (currIndex >= colors.Length)
+        {
+            currIndex = 0;
+        }
+        materials[currIndex].SetColor("_BaseColor", colorsAlpha[currIndex]);
+        player.UpdateColor(colors[currIndex]);
+        Blocker.UpdateTransparentColor(colors[currIndex]);
+    }
+
 
     // Security check to ensure that there are enough colors implemented into the game
     private void _ColorCheck()
@@ -185,4 +215,5 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    
 }

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private Renderer rend;
     public float speed = 1; // Speed of the player
     // TODO: create function to update speed of player based on difficulty and position in world (GameManager?)
+    private bool isAlive = true;
 
 
     // Start is called before the first frame update
@@ -42,12 +43,19 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // Debug.Log("Collision");
+        // TODO: set isAlive to false
         StartCoroutine("TempRestart");
+    }
+
+    public bool GetPlayerIsAlive()
+    {
+        return isAlive;
     }
 
     IEnumerator TempRestart()
     {
+
+
         float s = speed;
         transform.position = Vector3.zero;
         speed = 0;
