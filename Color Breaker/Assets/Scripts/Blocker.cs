@@ -7,6 +7,8 @@ public class Blocker : MonoBehaviour
 {
 
     public static Color currTransColor; // Controlled in GameManager, current color of player
+    public static float playerZ = 0;
+    private int zOffset = 20;
     public Color prevTransColor; // Previous transparent color, used to see if color needs to be checked
     public Color objColor; // Color for the object, set on initialization
     private Color objTransColor; // Transparent version of color for the object
@@ -32,6 +34,10 @@ public class Blocker : MonoBehaviour
             ColorCheck();
             prevTransColor = currTransColor;
         }
+        if (transform.position.z < playerZ - zOffset)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     // Updates to match the current player color
@@ -39,6 +45,11 @@ public class Blocker : MonoBehaviour
     {
         currTransColor = color;
         currTransColor.a = 1;
+    }
+
+    public static void UpdatePlayerPos(float newPlayerZ)
+    {
+        playerZ = newPlayerZ;
     }
 
     // Initialize the color of this blocker object

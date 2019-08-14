@@ -520,12 +520,12 @@ MonoBehaviour:
   transparency: 0.5
   materials: []
   zStartPos: 200
-  zChunkLength: 800
+  zChunkLength: 1000
   startingStep: 80
   stepDecreaseRate: 5
-  stepMin: 40
-  startFrequency: 0.5
-  frequencyIncreaseRate: 0.05
+  stepMin: 25
+  startFrequency: 0.4
+  frequencyIncreaseRate: 0.025
   frequencyMax: 0.8
   playerZDistanceToGenerateChunk: 800
 --- !u!4 &1700736177

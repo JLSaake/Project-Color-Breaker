@@ -35,6 +35,9 @@ public class ProceduralGenerator : MonoBehaviour
 
         currZ += step;
 
+        newFloor.transform.localScale = new Vector3(newFloor.transform.localScale.x, newFloor.transform.localScale.y, endZ - startZ);
+        newFloor.transform.position = new Vector3(newFloor.transform.position.x, newFloor.transform.position.y, (endZ + startZ)/2);
+
         do
         {
             if (SpawnCheck(currFrequency)) // If a blocker is going to be spawned

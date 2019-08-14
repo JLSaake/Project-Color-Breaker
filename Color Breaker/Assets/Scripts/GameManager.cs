@@ -152,6 +152,7 @@ public class GameManager : MonoBehaviour
             materials[currIndex].SetColor("_BaseColor", colorsAlpha[currIndex]);
             player.UpdateColor(colors[currIndex]);
             Blocker.UpdateTransparentColor(colors[currIndex]);
+            Blocker.UpdatePlayerPos(player.transform.position.z);
 
         }
     }
@@ -182,8 +183,6 @@ public class GameManager : MonoBehaviour
         {
             currFrequency = frequencyMax;
         }
-
-        Debug.Log(currStartZ + " / " + currEndZ + " / " + currStep + " / " + currFrequency);
 
     }
 }
