@@ -1912,7 +1912,7 @@ MonoBehaviour:
   startFrequency: 0.4
   frequencyIncreaseRate: 0.025
   frequencyMax: 0.85
-  maxConsecutiveColor: 3
+  maxConsecutiveColor: 4
   enforceRatio: 1
   playerZDistanceToGenerateChunk: 800
 --- !u!4 &1700736177

@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     public float startFrequency = 0.5f;
     public float frequencyIncreaseRate = 0.05f;
     public float frequencyMax = 0.8f;
-    public int maxConsecutiveColor = 3;
+    public int maxConsecutiveColor = 4;
     public bool enforceRatio = false;
 
     public int playerZDistanceToGenerateChunk = 800;

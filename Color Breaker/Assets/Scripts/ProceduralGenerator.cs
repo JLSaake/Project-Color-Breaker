@@ -91,6 +91,7 @@ public class ProceduralGenerator : MonoBehaviour
                 {
                     m = 0;
                 }
+                consecutiveColor = 0;
             }
         }
         colorIndex = m;
