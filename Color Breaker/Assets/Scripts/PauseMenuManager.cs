@@ -14,6 +14,8 @@ public class PauseMenuManager : MonoBehaviour
 
     public GameObject pausePanel;
     public GameObject mainPauseMenu;
+
+    public GameObject mainEndMenu;
     
 
     // Start is called before the first frame update
@@ -61,11 +63,21 @@ public class PauseMenuManager : MonoBehaviour
         pauseButton.gameObject.SetActive(true);
         pausePanel.SetActive(false);
         mainPauseMenu.SetActive(false);
+        mainEndMenu.SetActive(false);
         TogglePause(false);
     }
 
     public void LoadLevel(string SceneName)
     {
         SceneManager.LoadScene(SceneName, LoadSceneMode.Single);
+    }
+
+    // Screen popup for the end of the game
+    public void EndGame()
+    {
+        TogglePause(true);
+        pauseButton.gameObject.SetActive(false);
+        pausePanel.SetActive(true);
+        mainEndMenu.SetActive(true);
     }
 }

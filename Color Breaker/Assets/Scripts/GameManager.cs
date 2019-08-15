@@ -125,8 +125,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         isPaused = pm.GetIsPaused();
+        bool playerAlive = player.GetPlayerIsAlive();
 
-        if (player.GetPlayerIsAlive() && !isPaused)
+        if (playerAlive && !isPaused)
         {
             // Camera follow player
             mainCam.transform.position = player.transform.position - camOffset;
@@ -171,8 +172,13 @@ public class GameManager : MonoBehaviour
 
             }
             */
+        } else
+        if (!playerAlive)
+        {
+            pm.EndGame();
         }
         
+    
     }
 
     public void ToggleColor()

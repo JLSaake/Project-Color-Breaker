@@ -49,7 +49,8 @@ public class Player : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // TODO: set isAlive to false
-        StartCoroutine("TempRestart");
+        isAlive = false;
+        //StartCoroutine("TempRestart");
     }
 
     public bool GetPlayerIsAlive()
