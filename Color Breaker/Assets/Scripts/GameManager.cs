@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
     public float startFrequency = 0.5f;
     public float frequencyIncreaseRate = 0.05f;
     public float frequencyMax = 0.8f;
+    public int maxConsecutiveColor = 3;
+    public bool enforceRatio = false;
 
     public int playerZDistanceToGenerateChunk = 800;
 
@@ -105,7 +107,7 @@ public class GameManager : MonoBehaviour
         currEndZ = currStartZ + zChunkLength;
         currFrequency = startFrequency;
         
-        pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency);
+        pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency, maxConsecutiveColor, enforceRatio);
 
 
         // TEMP - all hard coded for now, and for one variable
@@ -134,7 +136,7 @@ public class GameManager : MonoBehaviour
             if (player.transform.position.z + playerZDistanceToGenerateChunk >= currEndZ)
             {
                 CalculateChunk();
-                pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency);
+                pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency, maxConsecutiveColor, enforceRatio);
             }
 
             Blocker.UpdatePlayerPos(player.transform.position.z);
@@ -175,6 +177,11 @@ public class GameManager : MonoBehaviour
 
     public void ToggleColor()
     {
+        // Start the player moving on first screen tap
+        if(!player.GetPlayerStarted())
+        {
+            player.PlayerStart();
+        }
         materials[currIndex].SetColor("_BaseColor", colors[currIndex]);
         ++currIndex;
         if (currIndex >= colors.Length)

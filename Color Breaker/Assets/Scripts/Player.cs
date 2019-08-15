@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public float speed = 1; // Speed of the player
     // TODO: create function to update speed of player based on difficulty and position in world (GameManager?)
     private bool isAlive = true;
+    private bool isStarted = false;
 
 
     // Start is called before the first frame update
@@ -23,8 +24,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Move player forward
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);   
+        if (isStarted)
+        {
+            // Move player forward
+            transform.Translate(Vector3.forward * speed * Time.deltaTime); 
+        }
+  
 
         /*
         if (transform.position.z > 4050)
@@ -50,6 +55,16 @@ public class Player : MonoBehaviour
     public bool GetPlayerIsAlive()
     {
         return isAlive;
+    }
+
+    public bool GetPlayerStarted()
+    {
+        return isStarted;
+    }
+
+    public void PlayerStart()
+    {
+        isStarted = true;
     }
 
     IEnumerator TempRestart()

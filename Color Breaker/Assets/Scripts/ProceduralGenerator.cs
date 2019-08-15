@@ -8,6 +8,8 @@ public class ProceduralGenerator : MonoBehaviour
     public Blocker blocker; // Blocker prefab to generate for level
     public GameObject floor; // floor for game (set scale to chunk length)
     private Material[] materials; // Sent from GameManager, the materials to choose from for blockers
+    private int consecutiveColor = 0;
+    private int colorIndex = 0;
 
 
     // Start is called before the first frame update
@@ -25,13 +27,14 @@ public class ProceduralGenerator : MonoBehaviour
     // Generates next portion of the level
     // (endZ - startZ) % step == 0
     // frequency should be in range [0-1] (inclusive)
-    public void GenerateChunk(int startZ, int endZ, int step, float frequency)
+    public void GenerateChunk(int startZ, int endZ, int step, float frequency, int maxConsecutive, bool enforceRatio)
     {
         float currFrequency = frequency; // Option to make it more likely to spawn after failed spawns
         int currZ = startZ;
 
         GameObject newFloor = Instantiate(floor);
 
+        float ratioCounter = 0;
 
         currZ += step;
 
@@ -42,8 +45,21 @@ public class ProceduralGenerator : MonoBehaviour
         {
             if (SpawnCheck(currFrequency)) // If a blocker is going to be spawned
             {
-                SpawnBlocker(currZ);
+                SpawnBlocker(currZ, maxConsecutive);
 
+            } else 
+            {
+                if (enforceRatio)
+                {
+                    if ((ratioCounter/1 > frequency))
+                    {
+                        SpawnBlocker(currZ, maxConsecutive);
+                        ratioCounter = 0;
+                    } else
+                    {
+                        ++ratioCounter;
+                    }
+                }
             }
             currZ += step;
         }   while (currZ + step <= endZ);
@@ -60,11 +76,24 @@ public class ProceduralGenerator : MonoBehaviour
     }
 
     // Spawn a blocker at the position
-    private void SpawnBlocker(int currZ)
+    private void SpawnBlocker(int currZ, int colorMax)
     {
         Blocker nb = Instantiate(blocker, new Vector3(0, 0, currZ), Quaternion.identity);
         // TODO: give material
         int m = Random.Range(0, materials.Length);
+        if (m == colorIndex)
+        {
+            ++consecutiveColor;
+            if (consecutiveColor > colorMax)
+            {
+                ++m;
+                if (m >= materials.Length)
+                {
+                    m = 0;
+                }
+            }
+        }
+        colorIndex = m;
         nb.gameObject.GetComponent<Renderer>().material = materials[m];
         nb.SetColor(materials[m].GetColor("_BaseColor"));
         

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class PauseMenuManager : MonoBehaviour
@@ -61,5 +62,10 @@ public class PauseMenuManager : MonoBehaviour
         pausePanel.SetActive(false);
         mainPauseMenu.SetActive(false);
         TogglePause(false);
+    }
+
+    public void LoadLevel(string SceneName)
+    {
+        SceneManager.LoadScene(SceneName, LoadSceneMode.Single);
     }
 }
