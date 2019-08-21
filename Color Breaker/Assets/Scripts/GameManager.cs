@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
     public int distanceDivider = 10; // Amount to divide raw Z value by for distance
     private int coins = 0; // In game currency
     public int distancePerCoin = 10; // Amount of distance needed to cover for a single coin
+
+    private bool gameOverCompleted = false;
     
 
 
@@ -155,10 +157,11 @@ public class GameManager : MonoBehaviour
 
 
         } else
-        if (!playerAlive) // Player has died, round is over
+        if (!playerAlive && !gameOverCompleted) // Player has died, round is over
         {
             CalculateCoins();
             pm.EndGame();
+            gameOverCompleted = true;
         }
         
     
@@ -223,6 +226,7 @@ public class GameManager : MonoBehaviour
     {
         distance = (int) (Mathf.Round(player.transform.position.z) / distanceDivider);
         Debug.Log(distance + " meters");
+        pm.UpdateDistanceText(distance); // Want this here or in Update?
     }
 
     // Calculates currency for player based on deisred distance measurement (not raw player Z)

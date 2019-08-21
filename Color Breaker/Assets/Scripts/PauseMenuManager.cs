@@ -16,6 +16,8 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject mainPauseMenu;
 
     public GameObject mainEndMenu;
+
+    public Text distanceText;
     
 
     // Start is called before the first frame update
@@ -30,11 +32,13 @@ public class PauseMenuManager : MonoBehaviour
         
     }
 
+    // Getter for use in GameManager
     public bool GetIsPaused()
     {
         return isPaused;
     }
 
+    // Wrapper function for dealing with time
     public void TogglePause(bool paused)
     {
         isPaused = paused;
@@ -50,6 +54,8 @@ public class PauseMenuManager : MonoBehaviour
 
 
 // TODO: If no settings menu in pause menu, then go ahead and make into one function with bool variable
+
+    // For stopping gameplay and presenting options to the player
     public void PauseGame()
     {
         TogglePause(true);
@@ -58,6 +64,7 @@ public class PauseMenuManager : MonoBehaviour
         mainPauseMenu.SetActive(true);
     }
 
+    // For clearing non-gameplay UI elements
     public void ResumeGame()
     {
         pauseButton.gameObject.SetActive(true);
@@ -67,17 +74,25 @@ public class PauseMenuManager : MonoBehaviour
         TogglePause(false);
     }
 
+    // Wrapper function to load Unity scene
     public void LoadLevel(string SceneName)
     {
         SceneManager.LoadScene(SceneName, LoadSceneMode.Single);
     }
 
-    // Screen popup for the end of the game
+    // Screen popup for the end of the game upon player's death
     public void EndGame()
     {
         TogglePause(true);
         pauseButton.gameObject.SetActive(false);
         pausePanel.SetActive(true);
         mainEndMenu.SetActive(true);
+    }
+
+
+    // Updates the UI element responsible for displaying distance to the player
+    public void UpdateDistanceText(int distance)
+    {
+        distanceText.text = distance.ToString() + " meters";
     }
 }
