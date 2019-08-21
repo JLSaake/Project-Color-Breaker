@@ -54,6 +54,14 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    private int distance = 0; // Meters traveled by the player
+    public int distanceDivider = 10; // Amount to divide raw Z value by for distance
+    private int coins = 0; // In game currency
+    public int distancePerCoin = 10; // Amount of distance needed to cover for a single coin
+    
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -127,7 +135,7 @@ public class GameManager : MonoBehaviour
         isPaused = pm.GetIsPaused();
         bool playerAlive = player.GetPlayerIsAlive();
 
-        if (playerAlive && !isPaused)
+        if (playerAlive && !isPaused) // Game is ongoing, player is moving
         {
             // Camera follow player
             mainCam.transform.position = player.transform.position - camOffset;
@@ -141,46 +149,22 @@ public class GameManager : MonoBehaviour
             }
 
             Blocker.UpdatePlayerPos(player.transform.position.z);
+            UpdateDistance();
+
+            // TODO: Add UI manager update for distance
 
 
-            /*
-            bool newTouch = false;    
-            foreach (Touch touch in Input.touches)
-            {
-                if (touch.phase == TouchPhase.Began)
-                {
-                    newTouch = true;
-                    break;
-                }
-            }
-            */
-
-            /*
-            // Input to change color
-            if (Input.GetKeyDown(KeyCode.Space) || newTouch)
-            {
-                materials[currIndex].SetColor("_BaseColor", colors[currIndex]);
-                ++currIndex;
-                if (currIndex >= colors.Length)
-                {
-                    currIndex = 0;
-                }
-                materials[currIndex].SetColor("_BaseColor", colorsAlpha[currIndex]);
-                player.UpdateColor(colors[currIndex]);
-                Blocker.UpdateTransparentColor(colors[currIndex]);
-                Blocker.UpdatePlayerPos(player.transform.position.z);
-
-            }
-            */
         } else
-        if (!playerAlive)
+        if (!playerAlive) // Player has died, round is over
         {
+            CalculateCoins();
             pm.EndGame();
         }
         
     
     }
 
+    // Switches the player's active color and updates necessary managers
     public void ToggleColor()
     {
         // Start the player moving on first screen tap
@@ -212,6 +196,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Determine next variables for procedural generation chunk
     private void CalculateChunk()
     {
         currStartZ = currEndZ;
@@ -228,5 +213,26 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+
+
+    #region Scoring Calculations
+
+    // Runs calculations to transform player's Z position into desired measurement
+    void UpdateDistance()
+    {
+        distance = (int) (Mathf.Round(player.transform.position.z) / distanceDivider);
+        Debug.Log(distance + " meters");
+    }
+
+    // Calculates currency for player based on deisred distance measurement (not raw player Z)
+    void CalculateCoins()
+    {
+        coins = distance / distancePerCoin;
+        Debug.Log(coins + " coins");
+    }
+
+
+    #endregion
     
 }

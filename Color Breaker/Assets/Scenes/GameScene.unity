@@ -1411,7 +1411,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 6
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!1 &1177019296
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,6 +1915,8 @@ MonoBehaviour:
   maxConsecutiveColor: 4
   enforceRatio: 1
   playerZDistanceToGenerateChunk: 800
+  distanceDivider: 10
+  distancePerCoin: 10
 --- !u!4 &1700736177
 Transform:
   m_ObjectHideFlags: 0
