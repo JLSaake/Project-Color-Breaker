@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private const string GAMESCENE = "GameScene";
+    private const string GAMESCENE = "GameScene"; // Scene where gameplay takes place
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,7 @@ public class MainMenuManager : MonoBehaviour
         
     }
 
+    // Wrapper function for loading the gameplay scene
     public void StartGame()
     {
         SceneManager.LoadScene(GAMESCENE, LoadSceneMode.Single);

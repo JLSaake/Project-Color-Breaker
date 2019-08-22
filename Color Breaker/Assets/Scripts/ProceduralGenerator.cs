@@ -5,23 +5,13 @@ using UnityEngine;
 public class ProceduralGenerator : MonoBehaviour
 {
 
-    
-    /*
-    EDITOR FUNCTION KEYS
-
-    [Range(min, max)]
-    [Tooltip("tooltip text")]
-    [Space(pixels)]
-    [RequireComponent(typeof(type))]
-    [Header("header text")]
-    
-    */
-
+    [Tooltip("Blocker prefab for generating obstacles")]
     public Blocker blocker; // Blocker prefab to generate for level
+    [Tooltip("Floor prefab for generating chunks")]
     public GameObject floor; // floor for game (set scale to chunk length)
     private Material[] materials; // Sent from GameManager, the materials to choose from for blockers
-    private int consecutiveColor = 0;
-    private int colorIndex = 0;
+    private int consecutiveColor = 0; // Counter for cosecutive colors generated
+    private int colorIndex = 0; // Index of most recently generated color
 
 
     // Generates next portion of the level
@@ -63,17 +53,17 @@ public class ProceduralGenerator : MonoBehaviour
         Blocker nb = Instantiate(blocker, new Vector3(0, 0, currZ), Quaternion.identity);
         // TODO: give material (unknown TODO)
         int m = Random.Range(0, materials.Length);
-        if (m == colorIndex)
+        if (m == colorIndex) // The color is a consecutive color
         {
             ++consecutiveColor;
-            if (consecutiveColor > colorMax)
+            if (consecutiveColor > colorMax) // The limit for consecutive color has been reached
             {
                 ++m;
-                if (m >= materials.Length)
+                if (m >= materials.Length) // Array wrap around
                 {
                     m = 0;
                 }
-                consecutiveColor = 0;
+                consecutiveColor = 1; // New blocker is first instance of new consecutive color count
             }
         }
         colorIndex = m;

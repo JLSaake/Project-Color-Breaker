@@ -7,17 +7,21 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
-
-    private bool isPaused = false;
+    [Tooltip("Text field for displaying distance to the player")]
+    public Text distanceText;
+    [Tooltip("Panel that translates touch input into gameplay aciton")]
     public GameObject playPanel;
+    [Tooltip("Button to stop gameplay")]
     public Button pauseButton;
-
+    [Tooltip("Tinted panel that comes up to block gameplay action from occuring")]
     public GameObject pausePanel;
+    [Tooltip("GameObject that cointains pause menu UI elements as children")]
     public GameObject mainPauseMenu;
-
+    [Tooltip("GameObject that contains end of game UI elements as children")]
     public GameObject mainEndMenu;
 
-    public Text distanceText;
+    private bool isPaused = false; // Is the game currently in a paused state (no gameplay occuring)
+
     
 
     // Start is called before the first frame update

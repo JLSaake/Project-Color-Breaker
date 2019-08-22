@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
 
-    private MaterialPropertyBlock matBlock;
-    private Renderer rend;
+    [Tooltip("Speed of the player in the Z direction")]
     public float speed = 100; // Speed of the player
-    private bool isAlive = true;
-    private bool isStarted = false;
+    private bool isAlive = true; // Is the player currently alive
+    private bool isStarted = false; // Has the player initiated gameplay
+    private Renderer rend;
+    private MaterialPropertyBlock matBlock;
+
 
 
     // Start is called before the first frame update
@@ -29,6 +32,14 @@ public class Player : MonoBehaviour
             transform.Translate(Vector3.forward * speed * Time.deltaTime); 
         }
     }
+    
+    #region Gameplay Functions
+
+    // Start the game
+    public void PlayerStart()
+    {
+        isStarted = true;
+    }
 
     // Changes the player color
     public void UpdateColor(Color color)
@@ -37,23 +48,27 @@ public class Player : MonoBehaviour
         rend.SetPropertyBlock(matBlock);
     }
 
+    // Collision with a blocker
     void OnCollisionEnter(Collision collision)
     {
         isAlive = false;
     }
 
+    #endregion
+
+    #region Getters
+
+    // Get if the player is alive
     public bool GetPlayerIsAlive()
     {
         return isAlive;
     }
 
+    // Get if the game has started
     public bool GetPlayerStarted()
     {
         return isStarted;
     }
 
-    public void PlayerStart()
-    {
-        isStarted = true;
-    }
+    #endregion
 }
