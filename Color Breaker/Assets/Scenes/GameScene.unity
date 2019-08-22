@@ -1626,18 +1626,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180915027}
   m_CullTransparentMesh: 0
---- !u!114 &1457964735 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1155311762248089720, guid: f1416a13e1b6fb145a8fbda969d1db98,
-    type: 3}
-  m_PrefabInstance: {fileID: 1155311763148113607}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e897c5532949a4483ec89ddf91761e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1653852758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,7 +1883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d12c9db4c84846499b2d8c599bc33b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blocker: {fileID: 1457964735}
   material0: {fileID: 2100000, guid: 9ea57e3377564ed4ca8226a06376c789, type: 2}
   material1: {fileID: 2100000, guid: 2ada4b7aebe1ecb4bbdc5533c4632a84, type: 2}
   material2: {fileID: 2100000, guid: cc6c0c486c3ed5746803758ad63251bb, type: 2}
@@ -1904,19 +1891,16 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 1, g: 0, b: 0, a: 1}
   transparency: 0.5
-  materials: []
-  isPaused: 0
-  zStartPos: 200
-  zChunkLength: 1000
-  startingStep: 80
-  stepDecreaseRate: 5
-  stepMin: 25
-  startFrequency: 0.4
+  zStartPos: 100
+  chunkLength: 800
+  playerZDistanceToGenerateChunk: 800
+  startingStep: 50
+  stepDecreaseRate: 2
+  stepMin: 20
+  startFrequency: 0.5
   frequencyIncreaseRate: 0.025
   frequencyMax: 0.85
   maxConsecutiveColor: 4
-  enforceRatio: 1
-  playerZDistanceToGenerateChunk: 800
   distanceDivider: 10
   distancePerCoin: 10
 --- !u!4 &1700736177
@@ -2422,7 +2406,7 @@ PrefabInstance:
     - target: {fileID: 368944888492834009, guid: 0dd2e57f4251e9648a30ac69c3223a73,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 368944888492834009, guid: 0dd2e57f4251e9648a30ac69c3223a73,
         type: 3}
@@ -2464,6 +2448,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 368944888492834009, guid: 0dd2e57f4251e9648a30ac69c3223a73,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dd2e57f4251e9648a30ac69c3223a73, type: 3}
 --- !u!1001 &1155311763148113607
@@ -2477,6 +2466,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Blocker
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155311762248089726, guid: f1416a13e1b6fb145a8fbda969d1db98,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1155311762248089722, guid: f1416a13e1b6fb145a8fbda969d1db98,
         type: 3}

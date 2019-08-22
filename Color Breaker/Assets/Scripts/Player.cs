@@ -8,8 +8,7 @@ public class Player : MonoBehaviour
 
     private MaterialPropertyBlock matBlock;
     private Renderer rend;
-    public float speed = 1; // Speed of the player
-    // TODO: create function to update speed of player based on difficulty and position in world (GameManager?)
+    public float speed = 100; // Speed of the player
     private bool isAlive = true;
     private bool isStarted = false;
 
@@ -24,19 +23,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isStarted)
+        if (isStarted) // Level has begun
         {
             // Move player forward
             transform.Translate(Vector3.forward * speed * Time.deltaTime); 
         }
-  
-
-        /*
-        if (transform.position.z > 4050)
-        {
-            StartCoroutine("TempRestart");
-        } 
-        */
     }
 
     // Changes the player color
@@ -48,9 +39,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // TODO: set isAlive to false
         isAlive = false;
-        //StartCoroutine("TempRestart");
     }
 
     public bool GetPlayerIsAlive()
@@ -66,16 +55,5 @@ public class Player : MonoBehaviour
     public void PlayerStart()
     {
         isStarted = true;
-    }
-
-    IEnumerator TempRestart()
-    {
-
-
-        float s = speed;
-        transform.position = Vector3.zero;
-        speed = 0;
-        yield return new WaitForSeconds(5f);
-        speed = s;
     }
 }

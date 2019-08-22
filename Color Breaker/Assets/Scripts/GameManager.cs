@@ -5,85 +5,183 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    // TEMP
-    public Blocker blocker;
-
-    #region BlockerMaterials
+    #region BlockerMaterials & Colors
     // Materials that will be used for procedurally generating blockers
+    
+    [Header("Materials & Colors")]
+    [Tooltip("Material preset used for blockers")]
     public Material material0;
+    [Tooltip("Material preset used for blockers")]
     public Material material1;
+    [Tooltip("Material preset used for blockers in harder game modes")]
     public Material material2;
+    [Tooltip("Material preset used for blockers in harder game modes")]
     public Material material3;
+    [Space(5)]
+    [Tooltip("Colors for use on blockers and player - NOTE: must be more than 2 and will eventually be set by code elsewhere")]
+    public Color[] colors; // Location for all colors in the game
+    [Tooltip("Alpha value for blockers that are safe to pass through")]
+    [Range(0,1)]
+    public float transparency = 0.5f; // Transparency value for materials
+    private Material[] materials; // Used for storing and transfering preset materials
+    private int currIndex = 0; // Current color selected
+    private Color[] colorsAlpha; // Array created from colors (above) that have transparency values (able to be passed through)
 
     #endregion
+
+    #region Procedural Variables
+     // For use in Procedural generation and determing chunk spawns
+
+    [Header("Procedural Generation")]
+    [Tooltip("'Z' position to start generating the first chunk")]
+    public int zStartPos = 100;
+    [Tooltip("Size of each chunk to generate")]
+    public int chunkLength = 800;
+    [Tooltip("Distance from the player to the end of the previously generated chunk to generate the next chunk")]
+    public int playerZDistanceToGenerateChunk = 800;
+    [Tooltip("Starting increment spacing for generating blockers")]
+    public int startingStep = 60;
+    [Tooltip("Decrement rate for increment spacing each chunk generation")]
+    public int stepDecreaseRate = 5;
+    [Tooltip("Minimum space between blockers")]
+    public int stepMin = 30;
+    [Tooltip("Starting percentage chance to spawn a blocker at each increment")]
+    public float startFrequency = 0.5f;
+    [Tooltip("Increment rate of frequency each chunk generation")]
+    public float frequencyIncreaseRate = 0.05f;
+    [Tooltip("Maximum percentage chance of blocker spawning at each increment")]
+    public float frequencyMax = 0.8f;
+    [Tooltip("Maximum number of consecutive blockers of the same color")]
+    [Range(1,10)]
+    public int maxConsecutiveColor = 4;
+    private int currStartZ; // Current starting Z value for the next chunk
+    private int currEndZ; // Current ending Z value for the next chunk
+    private int currStep; // Current step value for the next chunk
+    private float currFrequency; // Current frequency value for the next chunk
+
+    #endregion
+
+    #region Scoring
+    // For calculating scoring and currency
+
+    [Header("Scoring")]
+    [Tooltip("How many raw 'Z' units equal one distance unit")]
+    public int distanceDivider = 10; // Amount to divide raw Z value by for distance
+    [Tooltip("How many distance units equal one currency unit")]
+    public int distancePerCoin = 10; // Amount of distance needed to cover for a single coin
+    private int distance = 0; // Meters traveled by the player during this level
+    private int coins = 0; // In game currency earned during this level
+
+    #endregion
+
+    #region Private Managers and Objects
+    // Other sub-managers and objects that are found by script, and their related variables
 
     private PauseMenuManager pm;
     private ProceduralGenerator pg; // Handles generation of blockers
     private Player player; // Player object
     private Camera mainCam; // Main camera that follows player
     private Vector3 camOffset; // Offset of the camera from the player
-    public Color[] colors; // Location for all colors in the game
-    private int currIndex = 0; // Current color selected
-    private Color[] colorsAlpha; // Array created from colors (above) that have transparency values (able to be passed through)
-    public float transparency = 0.5f; // Transparency value for materials
-
-    public Material[] materials;
-
-    public bool isPaused = false;
-
-
-    #region Procedural Variables
-
-    private int currStartZ;
-    private int currEndZ;
-    private int currStep;
-    private float currFrequency;
-
-    public int zStartPos = 200;
-    public int zChunkLength = 800;
-    public int startingStep = 60;
-    public int stepDecreaseRate = 5;
-    public int stepMin = 30;
-    public float startFrequency = 0.5f;
-    public float frequencyIncreaseRate = 0.05f;
-    public float frequencyMax = 0.8f;
-    public int maxConsecutiveColor = 4;
-    public bool enforceRatio = false;
-
-    public int playerZDistanceToGenerateChunk = 800;
 
     #endregion
 
-    private int distance = 0; // Meters traveled by the player
-    public int distanceDivider = 10; // Amount to divide raw Z value by for distance
-    private int coins = 0; // In game currency
-    public int distancePerCoin = 10; // Amount of distance needed to cover for a single coin
+    #region Other Helper Variables
+    // Helper variables used in this class only
 
+    private bool isPaused = false;
     private bool gameOverCompleted = false;
-    
 
+    #endregion
 
 
     // Start is called before the first frame update
     void Start()
     {
         _ColorCheck(); // Assert that there are enough colors in the game
+        _FindObjects(); // Find player and managers
+
+        _UpdateMaterialColors();// Handle color changing of materials
+        pg.SetMaterials(materials); // Set materials in Procedural Generator
+        _SetAlphaColors(); // Establish an array of transparent colors for changing materials
+        materials[currIndex].SetColor("_BaseColor", colorsAlpha[currIndex]); // Set starting material to be transparent
+
+        _SetStartingProceduralVariables(); // Alter procedural values to prepare for first procedural generation        
+        pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency, maxConsecutiveColor); // First procedural generation chunk
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        isPaused = pm.GetIsPaused();
+        bool playerAlive = player.GetPlayerIsAlive();
+
+
+        if (playerAlive && !isPaused) // Game is ongoing, player is moving
+        {
+            // Camera follow player
+            mainCam.transform.position = player.transform.position - camOffset;
+
+            // If the player is within range to generate a new chunk
+            if (player.transform.position.z + playerZDistanceToGenerateChunk >= currEndZ)
+            {
+                CalculateChunk();
+                pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency, maxConsecutiveColor);
+            }
+
+            Blocker.UpdatePlayerPos(player.transform.position.z);
+            UpdateDistance();
+
+        } else
+        if (!playerAlive && !gameOverCompleted) // Player has died, round is over
+        {
+            CalculateCoins();
+            pm.EndGame();
+            gameOverCompleted = true;
+        }
+        
+    
+    }
+
+    #region Start Functions
+
+    // Security check to ensure that there are enough colors implemented into the game
+    private void _ColorCheck()
+    {
+        if (colors.Length < 1) // TODO: change to 2 to prevent infinite gameplay
+        {
+            Debug.LogWarning("ColorWarning: Insufficient colors set on instantiation of GameManager. Switching to defaults.");
+            colors = new Color[2];
+            colors[0] = Color.white;
+            colors[1] = Color.black;
+        }
+    }
+
+    // Finding player and managers in the scene
+    private void _FindObjects()
+    {
+        // Find player and set starting color and camera offset
         player = GameObject.FindObjectOfType<Player>();
         player.UpdateColor(colors[currIndex]);
 
+        // If ever add a second camera, this would need to be changed
         mainCam = Camera.main;
         camOffset = player.transform.position - mainCam.transform.position;
 
+        // Find other managers
         pg = GameObject.FindObjectOfType<ProceduralGenerator>();
         pm = GameObject.FindObjectOfType<PauseMenuManager>();
-        
+    }
 
-        // Handle color changing of materials
+    // Update material presets with chosen colors
+    private void _UpdateMaterialColors()
+    {
         materials = new Material[colors.Length];
         material0.SetColor("_BaseColor", colors[0]);
         materials[0] = material0;
         material1.SetColor("_BaseColor", colors[1]);
         materials[1] = material1;
+        
+        // Setup for harder game modes
         if (colors.Length >= 3)
         {
             material2.SetColor("_BaseColor", colors[2]);
@@ -98,10 +196,11 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
 
-        pg.SetMaterials(materials);
-
-        // Establish an array of transparent colors for changing materials
+    // Setup colors with correct alpha values for altering preset materials later
+    private void _SetAlphaColors()
+    {
         colorsAlpha = new Color[colors.Length];
         for (int i = 0; i < colorsAlpha.Length; ++i)
         {
@@ -110,62 +209,19 @@ public class GameManager : MonoBehaviour
             colorsAlpha[i].b = colors[i].b;
             colorsAlpha[i].a = transparency;
         }
-        materials[currIndex].SetColor("_BaseColor", colorsAlpha[currIndex]);
+    }
 
+    // Setup initial values for first procedural generation
+    private void _SetStartingProceduralVariables()
+    {
         currStartZ = zStartPos;
         currStep = startingStep;
-        currEndZ = currStartZ + zChunkLength;
+        currEndZ = currStartZ + chunkLength;
         currFrequency = startFrequency;
-        
-        pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency, maxConsecutiveColor, enforceRatio);
-
-
-        // TEMP - all hard coded for now, and for one variable
-        blocker.SetColor(colors[1]);
-        Blocker.UpdateTransparentColor(colors[currIndex]);
-
-        // TODO: add first blocker, alwyas controlled by GameManager, to be second color
-
-        // TEMP - Testing ProceduralGenerator
-        // pg.GenerateChunk(200, 4000, 40, 0.66f);
-
     }
+    #endregion
 
-    // Update is called once per frame
-    void Update()
-    {
-        isPaused = pm.GetIsPaused();
-        bool playerAlive = player.GetPlayerIsAlive();
-
-        if (playerAlive && !isPaused) // Game is ongoing, player is moving
-        {
-            // Camera follow player
-            mainCam.transform.position = player.transform.position - camOffset;
-
-
-            // If the player is within range to generate a new chunk
-            if (player.transform.position.z + playerZDistanceToGenerateChunk >= currEndZ)
-            {
-                CalculateChunk();
-                pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency, maxConsecutiveColor, enforceRatio);
-            }
-
-            Blocker.UpdatePlayerPos(player.transform.position.z);
-            UpdateDistance();
-
-            // TODO: Add UI manager update for distance
-
-
-        } else
-        if (!playerAlive && !gameOverCompleted) // Player has died, round is over
-        {
-            CalculateCoins();
-            pm.EndGame();
-            gameOverCompleted = true;
-        }
-        
-    
-    }
+    #region Gameplay Functions
 
     // Switches the player's active color and updates necessary managers
     public void ToggleColor()
@@ -186,19 +242,6 @@ public class GameManager : MonoBehaviour
         Blocker.UpdateTransparentColor(colors[currIndex]);
     }
 
-
-    // Security check to ensure that there are enough colors implemented into the game
-    private void _ColorCheck()
-    {
-        if (colors.Length < 1) // TODO: change to 2 to prevent infinite gameplay
-        {
-            Debug.LogWarning("ColorWarning: Insufficient colors set on instantiation of GameManager. Switching to defaults.");
-            colors = new Color[2];
-            colors[0] = Color.white;
-            colors[1] = Color.black;
-        }
-    }
-
     // Determine next variables for procedural generation chunk
     private void CalculateChunk()
     {
@@ -208,7 +251,7 @@ public class GameManager : MonoBehaviour
         {
             currStep = stepMin;
         }
-        currEndZ = currStartZ + zChunkLength;
+        currEndZ = currStartZ + chunkLength;
         currFrequency += frequencyIncreaseRate;
         if (currFrequency > frequencyMax)
         {
@@ -217,7 +260,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-
+    #endregion
 
     #region Scoring Calculations
 
@@ -225,7 +268,7 @@ public class GameManager : MonoBehaviour
     void UpdateDistance()
     {
         distance = (int) (Mathf.Round(player.transform.position.z) / distanceDivider);
-        Debug.Log(distance + " meters");
+        // Debug.Log(distance + " meters");
         pm.UpdateDistanceText(distance); // Want this here or in Update?
     }
 
@@ -233,9 +276,8 @@ public class GameManager : MonoBehaviour
     void CalculateCoins()
     {
         coins = distance / distancePerCoin;
-        Debug.Log(coins + " coins");
+        // Debug.Log(coins + " coins");
     }
-
 
     #endregion
     

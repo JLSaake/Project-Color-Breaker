@@ -23,13 +23,7 @@ public class PauseMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ResumeGame();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ResumeGame(); // Resets UI to gameplay state
     }
 
     // Getter for use in GameManager
