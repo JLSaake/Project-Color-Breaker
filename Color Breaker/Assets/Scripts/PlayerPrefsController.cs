@@ -148,7 +148,7 @@ public class PlayerPrefsController : MonoBehaviour
     // Get current top distance
     public static int GetTopDistance()
     {
-        PlayerPrefs.GetInt(TOP_DISTANCE_KEY);
+        return PlayerPrefs.GetInt(TOP_DISTANCE_KEY);
     }
 
     // Sets the current coins number of coins the player possesses
@@ -160,7 +160,7 @@ public class PlayerPrefsController : MonoBehaviour
     // Gets the current number of coins the player possesses
     public static int GetCurrentCoins()
     {
-        PlayerPrefs.GetInt(CURRENT_COINS_KEY);
+        return PlayerPrefs.GetInt(CURRENT_COINS_KEY);
     }
 
     #endregion

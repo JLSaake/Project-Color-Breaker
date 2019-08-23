@@ -228,12 +228,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f3dd78539eb2e4792a54dc10e149d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceText: {fileID: 2084930065}
   playPanel: {fileID: 672818695}
   pauseButton: {fileID: 742248999}
   pausePanel: {fileID: 1678025823}
   mainPauseMenu: {fileID: 1970830223}
   mainEndMenu: {fileID: 415917025}
-  distanceText: {fileID: 2084930065}
 --- !u!4 &274940016
 Transform:
   m_ObjectHideFlags: 0
@@ -465,10 +465,10 @@ RectTransform:
   m_Father: {fileID: 379573812}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &436731127
 GameObject:
@@ -2083,10 +2083,10 @@ RectTransform:
   m_Father: {fileID: 379573812}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2031974467
 GameObject:
