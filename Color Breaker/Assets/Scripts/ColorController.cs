@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ColorController : MonoBehaviour
 {
@@ -15,13 +16,28 @@ public class ColorController : MonoBehaviour
 
     #endregion
 
-    Color color0 = new Color();
+    public GameObject colorPrimaryButton0;
+    public GameObject colorPrimaryButton1;
+    public GameObject colorPrimaryButton2;
+    public GameObject colorPrimaryButton3;
+    public GameObject colorPrimaryButton4;
+    public GameObject colorPrimaryButton5;
+    public GameObject colorPrimaryButton6;
+    public GameObject colorPrimaryButton7;
+    public GameObject colorPrimaryButton8;
+    public GameObject colorPrimaryButton9;
+    public GameObject colorPrimaryButton10;
+    public GameObject colorPrimaryButton11;
+
+    private Text primaryButton0Text;
+
+    Color colorPrimary = new Color();
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        primaryButton0Text = colorPrimaryButton0.GetComponentInChildren<Text>();
     }
 
     // Update is called once per frame
@@ -30,26 +46,27 @@ public class ColorController : MonoBehaviour
         
     }
 
-    public void SetColor0(string color)
+    public void SetColorPrimary(string color)
     {
         switch (color)
         {
             case "White":
-                color0 = colorWhite;
+                colorPrimary = colorWhite;
+                primaryButton0Text.text = "Selected";
                 break;
             case "Black":
-                color0 = colorBlack;
+                colorPrimary = colorBlack;
                 break;
             case "Red":
-                color0 = colorRed;
+                colorPrimary = colorRed;
                 break;
             case "Blue":
-                color0 = colorBlue;
+                colorPrimary = colorBlue;
                 break;
             case "Green":
-                color0 = colorGreen;
+                colorPrimary = colorGreen;
                 break;
         }
-        Debug.Log(color0);
+        Debug.Log(colorPrimary);
     }
 }
