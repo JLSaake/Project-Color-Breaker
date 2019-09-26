@@ -31,6 +31,7 @@ public class ColorController : MonoBehaviour
     void Start()
     {
         SetButtonColors();
+        SetPrimarySecondaryFromData();
     }
 
     void SetButtonColors()
@@ -49,13 +50,36 @@ public class ColorController : MonoBehaviour
         }
     }
 
+    void SetPrimarySecondaryFromData()
+    {
+        for (int c = 0; c < ColorSelection.Length; ++c)
+        {
+            if (ColorSelection[c] == PlayerData.GetColor1())
+            {
+            Buttons1[c].GetComponentInChildren<Text>().text = "Primary";
+            Buttons2[c].GetComponentInChildren<Text>().text = "Primary";
+            Color1Index = c;
+            } else
+            if (ColorSelection[c] == PlayerData.GetColor2())
+            {
+            Buttons2[c].GetComponentInChildren<Text>().text = "Secondary";
+            Buttons1[c].GetComponentInChildren<Text>().text = "Secondary";
+            Color2Index = c;
+            }
+        }
+    }
+
 
     public void SetColor1(int ButtonIndex)
     {
         if (ButtonIndex != Color2Index)
         {
+            Buttons1[Color1Index].GetComponentInChildren<Text>().text = "";
+            Buttons2[Color1Index].GetComponentInChildren<Text>().text = "";
             Color1Index = ButtonIndex;
             PlayerData.SetColor1(ColorSelection[ButtonIndex]);
+            Buttons1[ButtonIndex].GetComponentInChildren<Text>().text = "Primary";
+            Buttons2[ButtonIndex].GetComponentInChildren<Text>().text = "Primary";
         } else
         {
             // Log some sort of display warning here
@@ -67,8 +91,14 @@ public class ColorController : MonoBehaviour
     {
         if (ButtonIndex != Color1Index)
         {
+            Buttons1[Color2Index].GetComponentInChildren<Text>().text = "";
+            Buttons2[Color2Index].GetComponentInChildren<Text>().text = "";
             Color2Index = ButtonIndex;
             PlayerData.SetColor2(ColorSelection[ButtonIndex]);
+            Buttons2[ButtonIndex].GetComponentInChildren<Text>().text = "Secondary";
+            Buttons1[ButtonIndex].GetComponentInChildren<Text>().text = "Secondary";
+
+
         } else
         {
             // Log some sort of display warning here

@@ -190,9 +190,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &10612264
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -271,9 +269,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &12375394
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -459,9 +455,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &171524436
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -821,7 +815,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1000 \xA2"
+  m_Text: 
 --- !u!222 &341721757
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1108,9 +1102,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &424931945
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1189,9 +1181,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &433101009
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1270,9 +1260,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &488759821
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1363,7 +1351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0.7490196, a: 1}
+  m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1458,7 +1446,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "1000 \xA2"
+  m_Text: 
 --- !u!222 &548940041
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1537,9 +1525,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &568464329
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1618,7 +1604,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Purchased
+  m_Text: 
 --- !u!222 &641648629
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2134,7 +2120,7 @@ MonoBehaviour:
   - {r: 0, g: 0.4716981, b: 0, a: 1}
   - {r: 1, g: 1, b: 0, a: 1}
   - {r: 0, g: 0.6320754, b: 0.61250603, a: 1}
-  - {r: 0.6037736, g: 0, b: 0.6037736, a: 2}
+  - {r: 0.6037736, g: 0, b: 0.6037736, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   - {r: 0, g: 0, b: 0, a: 1}
   - {r: 1, g: 0.5019608, b: 0, a: 1}
@@ -2251,9 +2237,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &901174006
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2719,9 +2703,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &950915553
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3387,9 +3369,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1073092144
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3801,7 +3781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0.7490196, a: 1}
+  m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3896,9 +3876,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1110918393
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4084,9 +4062,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1220174549
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4165,9 +4141,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1259039407
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4246,9 +4220,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1279677931
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4513,7 +4485,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Purchased
+  m_Text: 
 --- !u!222 &1462885772
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4592,9 +4564,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1477737213
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4947,9 +4917,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1676251321
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5236,9 +5204,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1714611796
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5317,9 +5283,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1733210102
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5505,9 +5469,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1768570162
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6061,9 +6023,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Purchased
-
-'
+  m_Text: 
 --- !u!222 &1998031943
 CanvasRenderer:
   m_ObjectHideFlags: 0
