@@ -50,6 +50,12 @@ public class MainMenuManager : MonoBehaviour
         colorMenu2.SetActive(false);
     }
 
+    public void BackToMainMenu()
+    {
+        SaveSystem.SaveGame();
+        OpenMainMenu();
+    }
+
     public void OpenColorMenu1()
     {
         colorMenu1.SetActive(true);

@@ -156,8 +156,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("ColorWarning: Insufficient colors set on instantiation of GameManager. Switching to defaults.");
             colors = new Color[2];
-            colors[0] = Color.white;
-            colors[1] = Color.black;
+            colors[0] = Color.blue;
+            colors[1] = Color.red;
         }
     }
 

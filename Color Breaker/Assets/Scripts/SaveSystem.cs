@@ -9,12 +9,15 @@ public static class SaveSystem
 
     public static void SaveGame()
     {
+        Debug.Log("Saving Game ...");
         GameData game = new GameData();
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
 
         formatter.Serialize(stream, game);
         stream.Close();
+        
+        Debug.Log("Game Saved! " + path);
 
     }
 
@@ -22,11 +25,14 @@ public static class SaveSystem
     {
         if (File.Exists(path))
         {
+            Debug.Log("Loading Game ...");
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
             GameData game = formatter.Deserialize(stream) as GameData;
             stream.Close();
+
+            Debug.Log("Game Loaded!");
 
             game.UpdatePlayerData();
         }

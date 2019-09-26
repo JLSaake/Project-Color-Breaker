@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
 
-    private static Color Color1 = Color.white;
-    private static Color Color2 = Color.black;
+    private static Color Color1 = Color.blue;
+    private static Color Color2 = Color.red;
     private static int Coins = 0;
     private static int HighScore = 0;
 
