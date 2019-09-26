@@ -97,6 +97,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        colors = new Color[2];
+        colors[0] = PlayerData.GetColor1();
+        colors[1] = PlayerData.GetColor2();
+
         _ColorCheck(); // Assert that there are enough colors in the game
         _FindObjects(); // Find player and managers
 
@@ -136,6 +140,7 @@ public class GameManager : MonoBehaviour
         {
             CalculateCoins();
             pm.EndGame();
+            SaveAtEndGame();
             gameOverCompleted = true;
         }
         
@@ -280,5 +285,17 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+    // Updates player data at the end of the game when the player dies
+    void SaveAtEndGame()
+    {
+        // Save coins and high score
+        PlayerData.AddCoins(coins);
+        if (distance > PlayerData.GetHighScore())
+        {
+            PlayerData.SetHighScore(distance);
+        }
+        SaveSystem.SaveGame();
+    }
     
 }
