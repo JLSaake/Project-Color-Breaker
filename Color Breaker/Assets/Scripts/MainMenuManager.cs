@@ -9,8 +9,11 @@ public class MainMenuManager : MonoBehaviour
 
     public GameObject mainStartMenu;
     public GameObject colorSelectionMenu;
+    public GameObject primaryColorButton;
+    public GameObject secondaryColorButton;
     public GameObject colorMenu1;
     public GameObject colorMenu2;
+    private Color fadedGray = new Color(.7f, .7f, .7f);
 
 
     private const string GAMESCENE = "GameScene"; // Scene where gameplay takes place
@@ -60,11 +63,15 @@ public class MainMenuManager : MonoBehaviour
     {
         colorMenu1.SetActive(true);
         colorMenu2.SetActive(false);
+        primaryColorButton.GetComponent<Image>().color = fadedGray;
+        secondaryColorButton.GetComponent<Image>().color = Color.white;
     }
 
     public void OpenColorMenu2()
     {
         colorMenu1.SetActive(false);
         colorMenu2.SetActive(true);
+            primaryColorButton.GetComponent<Image>().color = Color.white;
+        secondaryColorButton.GetComponent<Image>().color = fadedGray;
     }
 }
