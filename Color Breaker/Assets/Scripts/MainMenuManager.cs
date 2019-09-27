@@ -13,7 +13,9 @@ public class MainMenuManager : MonoBehaviour
     public GameObject secondaryColorButton;
     public GameObject colorMenu1;
     public GameObject colorMenu2;
+    public Text coinsText;
     private Color fadedGray = new Color(.7f, .7f, .7f);
+    private bool needCoins = false;
 
 
     private const string GAMESCENE = "GameScene"; // Scene where gameplay takes place
@@ -28,7 +30,10 @@ public class MainMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (needCoins)
+        {
+            coinsText.text = PlayerData.GetCoins() + " ¢";
+        }
     }
 
     // Wrapper function for loading the gameplay scene
@@ -43,6 +48,7 @@ public class MainMenuManager : MonoBehaviour
         mainStartMenu.SetActive(false);
         colorSelectionMenu.SetActive(true);
         OpenColorMenu1();
+        needCoins = true;
     }
 
     public void OpenMainMenu()
@@ -51,12 +57,14 @@ public class MainMenuManager : MonoBehaviour
         colorSelectionMenu.SetActive(false);
         colorMenu1.SetActive(false);
         colorMenu2.SetActive(false);
+        needCoins = false;
     }
 
     public void BackToMainMenu()
     {
         SaveSystem.SaveGame();
         OpenMainMenu();
+        needCoins = false;
     }
 
     public void OpenColorMenu1()
@@ -71,7 +79,7 @@ public class MainMenuManager : MonoBehaviour
     {
         colorMenu1.SetActive(false);
         colorMenu2.SetActive(true);
-            primaryColorButton.GetComponent<Image>().color = Color.white;
+        primaryColorButton.GetComponent<Image>().color = Color.white;
         secondaryColorButton.GetComponent<Image>().color = fadedGray;
     }
 }

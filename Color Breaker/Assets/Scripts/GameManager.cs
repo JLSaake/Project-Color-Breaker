@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("How many raw 'Z' units equal one distance unit")]
     public int distanceDivider = 10; // Amount to divide raw Z value by for distance
     [Tooltip("How many distance units equal one currency unit")]
-    public int distancePerCoin = 10; // Amount of distance needed to cover for a single coin
+    public int distancePerCoin = 50; // Amount of distance needed to cover for a single coin
     private int distance = 0; // Meters traveled by the player during this level
     private int coins = 0; // In game currency earned during this level
 
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
         if (!playerAlive && !gameOverCompleted) // Player has died, round is over
         {
             CalculateCoins();
-            pm.EndGame();
+            pm.EndGame(coins);
             SaveAtEndGame();
             gameOverCompleted = true;
         }
