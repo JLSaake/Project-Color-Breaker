@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
 
     private bool isPaused = false;
     private bool gameOverCompleted = false;
+    private bool isHighScore = false;
 
     #endregion
 
@@ -139,7 +140,8 @@ public class GameManager : MonoBehaviour
         if (!playerAlive && !gameOverCompleted) // Player has died, round is over
         {
             CalculateCoins();
-            pm.EndGame(coins);
+            isHighScore = distance > PlayerData.GetHighScore() ? true : false; // checks if current run is new high score
+            pm.EndGame(coins, isHighScore);
             SaveAtEndGame();
             gameOverCompleted = true;
         }

@@ -14,6 +14,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject colorMenu1;
     public GameObject colorMenu2;
     public Text coinsText;
+    public Text highScoreText;
     private Color fadedGray = new Color(.7f, .7f, .7f);
     private bool needCoins = false;
 
@@ -58,6 +59,7 @@ public class MainMenuManager : MonoBehaviour
         colorMenu1.SetActive(false);
         colorMenu2.SetActive(false);
         needCoins = false;
+        highScoreText.text = "High Score: " + PlayerData.GetHighScore() + " meters";
     }
 
     public void BackToMainMenu()

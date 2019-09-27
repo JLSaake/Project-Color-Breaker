@@ -20,6 +20,7 @@ public class PauseMenuManager : MonoBehaviour
     [Tooltip("GameObject that contains end of game UI elements as children")]
     public GameObject mainEndMenu;
     public Text coinsText;
+    public Text highScoreText;
 
     private bool isPaused = false; // Is the game currently in a paused state (no gameplay occuring)
 
@@ -80,13 +81,20 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     // Screen popup for the end of the game upon player's death
-    public void EndGame(int coins)
+    public void EndGame(int coins, bool highScore)
     {
         TogglePause(true);
         pauseButton.gameObject.SetActive(false);
         pausePanel.SetActive(true);
         mainEndMenu.SetActive(true);
         coinsText.text = "+ " + coins + " ¢";
+        if (highScore)
+        {
+            highScoreText.gameObject.SetActive(true);
+        } else
+        {
+            highScoreText.gameObject.SetActive(false);
+        }
     }
 
 
