@@ -24,18 +24,27 @@ public class ColorController : MonoBehaviour
     public Color[] ColorSelection; // Array of color buttons
     public GameObject[] Buttons1;
     public GameObject[] Buttons2;
+    public GameObject purchaseWindow; // Popup that asks user if they want to purchase color
+    public Text purchaseText; // Text to edit to tell user how many coins they are spending
+    public GameObject notEnoughCoinsWindow; // Popup that notifies user they do not have enough coins for color
+    public Text notEnoughCoinsText; // Text to edit to tell user how many coins short they are
     int Color1Index = 0;
     int Color2Index = 1;
+
+    private int purchaseIndex = 0;
 
 
     void Start()
     {
-        SetButtonColors();
+        SetButtonColorsAndPrices();
         SetPrimarySecondaryFromData();
+        PopupWindowsClosed();
     }
 
-    void SetButtonColors()
+    // TODO: merge into a single loop
+    void SetButtonColorsAndPrices()
     {
+        int cost = 0;
         if (ColorSelection.Length < Buttons1.Length || ColorSelection.Length < Buttons2.Length)
         {
             Debug.LogError("Insufficent Colors Specified in Color Selection Menu");
@@ -43,10 +52,22 @@ public class ColorController : MonoBehaviour
         for(int i = 0; i < Buttons1.Length; ++i)
         {
             Buttons1[i].GetComponent<Image>().color = ColorSelection[i];
+            cost = PlayerData.GetColorCost(i);
+            if (cost != 0)
+            {
+                Buttons1[i].GetComponentInChildren<Text>().text = cost.ToString() + " ¢";
+
+            }
         }
         for(int j = 0; j < Buttons2.Length; ++j)
         {
             Buttons2[j].GetComponent<Image>().color = ColorSelection[j];
+            cost = PlayerData.GetColorCost(j);
+            if (cost != 0)
+            {
+                Buttons2[j].GetComponentInChildren<Text>().text = cost.ToString() + " ¢";
+
+            }
         }
     }
 
@@ -56,125 +77,122 @@ public class ColorController : MonoBehaviour
         {
             if (ColorSelection[c] == PlayerData.GetColor1())
             {
-            Buttons1[c].GetComponentInChildren<Text>().text = "Primary";
-            Buttons2[c].GetComponentInChildren<Text>().text = "Primary";
+            _SetBothButtons(c, "Primary");
             Color1Index = c;
             } else
             if (ColorSelection[c] == PlayerData.GetColor2())
             {
-            Buttons2[c].GetComponentInChildren<Text>().text = "Secondary";
-            Buttons1[c].GetComponentInChildren<Text>().text = "Secondary";
+            _SetBothButtons(c, "Secondary");
             Color2Index = c;
             }
         }
     }
 
 
-    public void SetColor1(int ButtonIndex)
+    // TODO: combine to one function via second event trigger
+    // Handles setting the primary color, and displaying popup windows for unpurchased colors
+    public void SetColor1(int buttonIndex)
     {
-        if (ButtonIndex != Color2Index)
+        int price = CheckColorPrice(buttonIndex);
+        if (price == 0) // Color already purchased
         {
-            Buttons1[Color1Index].GetComponentInChildren<Text>().text = "";
-            Buttons2[Color1Index].GetComponentInChildren<Text>().text = "";
-            Color1Index = ButtonIndex;
-            PlayerData.SetColor1(ColorSelection[ButtonIndex]);
-            Buttons1[ButtonIndex].GetComponentInChildren<Text>().text = "Primary";
-            Buttons2[ButtonIndex].GetComponentInChildren<Text>().text = "Primary";
+            if (buttonIndex != Color2Index)
+            {
+                _SetBothButtons(Color1Index, "");
+                Color1Index = buttonIndex;
+                PlayerData.SetColor1(ColorSelection[buttonIndex]);
+                _SetBothButtons(buttonIndex, "Primary");
+            }
+        } else
+        if (price < 0) // Not enough coins to purchase
+        {
+            notEnoughCoinsWindow.SetActive(true);
+            notEnoughCoinsText.text = "You need " + Mathf.Abs(price) + " ¢ to purchase color";
+        } else // enough coins to purchase
+        {
+            purchaseWindow.SetActive(true);
+            purchaseText.text = "Would you like to buy color for " + price + " ¢?";
+            purchaseIndex = buttonIndex;
+        }
+
+    }
+
+    // Handles setting the secondary color, and displaying popup windows for unpurchased colors
+    public void SetColor2(int buttonIndex)
+    {
+        int price = CheckColorPrice(buttonIndex);
+        if (price == 0)
+        {
+            if (buttonIndex != Color1Index)
+            {
+                _SetBothButtons(Color2Index, "");
+                Color2Index = buttonIndex;
+                PlayerData.SetColor2(ColorSelection[buttonIndex]);
+                _SetBothButtons(buttonIndex, "Secondary");
+            }
+        } else
+        if (price < 0)
+        {
+            notEnoughCoinsWindow.SetActive(true);
+            notEnoughCoinsText.text = "You need " + Mathf.Abs(price) + " ¢ to purchase color";
         } else
         {
-            // Log some sort of display warning here
+            purchaseWindow.SetActive(true);
+            purchaseText.text = "Would you like to buy color for " + price + " ¢?";
+            purchaseIndex = buttonIndex;
         }
-        Debug.Log(PlayerData.GetColor1());
+
     }
 
-    public void SetColor2(int ButtonIndex)
+
+    // Returns one of three ints (positive means able to buy, negative means not enough coins, zero means already purchased)
+    public static int CheckColorPrice(int colorIndex)
     {
-        if (ButtonIndex != Color1Index)
+        int costForColor = PlayerData.GetColorCost(colorIndex);
+        int currCoins = PlayerData.GetCoins();
+        if (costForColor == 0)
         {
-            Buttons1[Color2Index].GetComponentInChildren<Text>().text = "";
-            Buttons2[Color2Index].GetComponentInChildren<Text>().text = "";
-            Color2Index = ButtonIndex;
-            PlayerData.SetColor2(ColorSelection[ButtonIndex]);
-            Buttons2[ButtonIndex].GetComponentInChildren<Text>().text = "Secondary";
-            Buttons1[ButtonIndex].GetComponentInChildren<Text>().text = "Secondary";
-
-
+            return 0;
+        } else
+        if (costForColor <= currCoins)
+        {
+            return costForColor;
         } else
         {
-            // Log some sort of display warning here
+            return currCoins - costForColor;
         }
-        Debug.Log(PlayerData.GetColor2());
     }
 
-
-    /*
-
-
-
-    #region Color Keys
-
-    Color colorWhite = Color.white;
-    Color colorBlack = Color.black;
-    Color colorRed = Color.red;
-    Color colorBlue = Color.blue;
-    Color colorGreen = Color.green;
-
-    #endregion
-
-    public GameObject colorPrimaryButton0;
-    public GameObject colorPrimaryButton1;
-    public GameObject colorPrimaryButton2;
-    public GameObject colorPrimaryButton3;
-    public GameObject colorPrimaryButton4;
-    public GameObject colorPrimaryButton5;
-    public GameObject colorPrimaryButton6;
-    public GameObject colorPrimaryButton7;
-    public GameObject colorPrimaryButton8;
-    public GameObject colorPrimaryButton9;
-    public GameObject colorPrimaryButton10;
-    public GameObject colorPrimaryButton11;
-
-    private Text primaryButton0Text;
-
-    Color colorPrimary = new Color();
-
-
-    // Start is called before the first frame update
-    void Start()
+    public void PurchaseColor()
     {
-        primaryButton0Text = colorPrimaryButton0.GetComponentInChildren<Text>();
+        PlayerData.AddCoins(-(PlayerData.GetColorCost(purchaseIndex)));
+        PlayerData.PurchaseColor(purchaseIndex);
+        _SetBothButtons(purchaseIndex, "");
+        ClosePurchaseWindow();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ClosePurchaseWindow()
     {
-        
+        purchaseWindow.SetActive(false);
+        purchaseIndex = 0;
+
     }
 
-    public void SetColorPrimary(string color)
+    public void CloseNotEnoughCoinsWindow()
     {
-        switch (color)
-        {
-            case "White":
-                colorPrimary = colorWhite;
-                primaryButton0Text.text = "Selected";
-                break;
-            case "Black":
-                colorPrimary = colorBlack;
-                break;
-            case "Red":
-                colorPrimary = colorRed;
-                break;
-            case "Blue":
-                colorPrimary = colorBlue;
-                break;
-            case "Green":
-                colorPrimary = colorGreen;
-                break;
-        }
-        Debug.Log(colorPrimary);
+        notEnoughCoinsWindow.SetActive(false);
     }
 
+    public void PopupWindowsClosed()
+    {
+        notEnoughCoinsWindow.SetActive(false);
+        purchaseWindow.SetActive(false);
+    }
 
-    */
+    private void _SetBothButtons(int index, string message)
+    {
+        Buttons1[index].GetComponentInChildren<Text>().text = message;
+        Buttons2[index].GetComponentInChildren<Text>().text = message;
+    }
+
 }

@@ -5,61 +5,78 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
 
-    private static Color Color1 = Color.blue;
-    private static Color Color2 = Color.red;
-    private static int Coins = 0;
-    private static int HighScore = 0;
-
-    // public static int[] ColorCosts;
-
-
+    private static Color color1 = Color.blue;
+    private static Color color2 = Color.red;
+    private static int coins = 0;
+    private static int highScore = 0;
+    public static int[] colorCosts; // Cost of each color item, first 2 should be 0 -> controlled in MainMenuManager
+    
 
     #region Getters and Setters
     public static void SetColor1(Color color)
     {
-        Color1 = color;
+        color1 = color;
     }
 
     public static void SetColor2(Color color)
     {
-        Color2 = color;
+        color2 = color;
     }
 
     public static void SetCoins(int newCoins)
     {
-        Coins = newCoins;
+        coins = newCoins;
     }
 
     public static void AddCoins(int add)
     {
-        Coins += add;
+        coins += add;
     }
 
     public static void SetHighScore(int newHighScore)
     {
-        HighScore = newHighScore;
+        highScore = newHighScore;
     }
 
     public static Color GetColor1()
     {
-        return Color1;
+        return color1;
     }
 
     public static Color GetColor2()
     {
-        return Color2;
+        return color2;
     }
 
     public static int GetCoins()
     {
-        return Coins;
+        return coins;
     }
 
     public static int GetHighScore()
     {
-        return HighScore;
+        return highScore;
     }
 
+    public static int GetColorCost(int index)
+    {
+        return colorCosts[index];
+    }
+
+    public static void PurchaseColor(int index)
+    {
+        colorCosts[index] = 0;
+    }
+
+
+    public static void SetColorCosts(int[] costs)
+    {
+        colorCosts = new int[costs.Length];
+        for (int i = 0; i < costs.Length; ++i)
+        {
+            colorCosts[i] = costs[i];
+        }
+    }
     #endregion
 
 }

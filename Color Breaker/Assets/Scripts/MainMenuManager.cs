@@ -13,10 +13,12 @@ public class MainMenuManager : MonoBehaviour
     public GameObject secondaryColorButton;
     public GameObject colorMenu1;
     public GameObject colorMenu2;
+    public int[] costOfEachColor; // NEEDS TO BE SAME LEN AS COLOR MENUS
     public Text coinsText;
     public Text highScoreText;
     private Color fadedGray = new Color(.7f, .7f, .7f);
     private bool needCoins = false;
+
 
 
     private const string GAMESCENE = "GameScene"; // Scene where gameplay takes place
@@ -24,6 +26,7 @@ public class MainMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerData.SetColorCosts(costOfEachColor);
         SaveSystem.LoadGame();
         OpenMainMenu();
     }

@@ -6,36 +6,45 @@ using UnityEngine;
 public class GameData
 {
 
-    public float[] Color1;
-    public float[] Color2;
-    public int Coins;
-    public int HighScore;
+    public float[] color1;
+    public float[] color2;
+    public int coins;
+    public int highScore;
+    public int[] costOfColors;
 
 
     public GameData()
     {
-        Color1 = new float[3];
-        Color1[0] = PlayerData.GetColor1().r;
-        Color1[1] = PlayerData.GetColor1().g;
-        Color1[2] = PlayerData.GetColor1().b;
+        color1 = new float[3];
+        color1[0] = PlayerData.GetColor1().r;
+        color1[1] = PlayerData.GetColor1().g;
+        color1[2] = PlayerData.GetColor1().b;
 
-        Color2 = new float[3];
-        Color2[0] = PlayerData.GetColor2().r;
-        Color2[1] = PlayerData.GetColor2().g;
-        Color2[2] = PlayerData.GetColor2().b;
+        color2 = new float[3];
+        color2[0] = PlayerData.GetColor2().r;
+        color2[1] = PlayerData.GetColor2().g;
+        color2[2] = PlayerData.GetColor2().b;
 
-        Coins = PlayerData.GetCoins();
+        coins = PlayerData.GetCoins();
 
-        HighScore = PlayerData.GetHighScore();
+        highScore = PlayerData.GetHighScore();
+
+        costOfColors = new int[12]; // num of colors -> need to make a const for this
+        for(int i = 0; i < costOfColors.Length; ++i)
+        {
+            costOfColors[i] = PlayerData.GetColorCost(i);
+        }
 
     }
 
     public void UpdatePlayerData()
     {
-        PlayerData.SetColor1(new Color(Color1[0], Color1[1], Color1[2]));
-        PlayerData.SetColor2(new Color(Color2[0], Color2[1], Color2[2]));
-        PlayerData.SetCoins(Coins);
-        PlayerData.SetHighScore(HighScore);
+        PlayerData.SetColor1(new Color(color1[0], color1[1], color1[2]));
+        PlayerData.SetColor2(new Color(color2[0], color2[1], color2[2]));
+        PlayerData.SetCoins(coins);
+        PlayerData.SetHighScore(highScore);
+        PlayerData.SetColorCosts(costOfColors);
+        
     }
 
 
