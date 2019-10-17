@@ -20,14 +20,22 @@ public class ColorController : MonoBehaviour
 
     // TODO: use colorblind friendly colors
 
-
+    [Header("Color Buttons")]
+    [Tooltip("Array of colors for gameplay, must be greater than or equal to number of buttons")]
     public Color[] ColorSelection; // Array of color buttons
+    [Tooltip("Array of button gameobjects for selecting primary color")]
     public GameObject[] Buttons1;
+    [Tooltip("Array of button gameobjects for selecting secondary color")]
     public GameObject[] Buttons2;
+    [Tooltip("Popup gameobject for confirming color purchase")]
     public GameObject purchaseWindow; // Popup that asks user if they want to purchase color
+    [Tooltip("Text object for displaying purchase text and price")]
     public Text purchaseText; // Text to edit to tell user how many coins they are spending
+    [Tooltip("Popup gameobject for notifying player they do not have enough coins to purchase color")]
     public GameObject notEnoughCoinsWindow; // Popup that notifies user they do not have enough coins for color
+    [Tooltip("Text object for displaying how many coins the player needs to purchase color")]
     public Text notEnoughCoinsText; // Text to edit to tell user how many coins short they are
+    
     int Color1Index = 0;
     int Color2Index = 1;
 
