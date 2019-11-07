@@ -29,6 +29,7 @@ public class MainMenuManager : MonoBehaviour
         PlayerData.SetColorCosts(costOfEachColor);
         SaveSystem.LoadGame();
         OpenMainMenu();
+        SkyboxManager.UpdateSkybox();
     }
 
     // Update is called once per frame

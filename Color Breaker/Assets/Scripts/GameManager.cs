@@ -112,6 +112,8 @@ public class GameManager : MonoBehaviour
 
         _SetStartingProceduralVariables(); // Alter procedural values to prepare for first procedural generation        
         pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency, maxConsecutiveColor); // First procedural generation chunk
+
+        SkyboxManager.UpdateSkybox();
     }
 
     // Update is called once per frame
