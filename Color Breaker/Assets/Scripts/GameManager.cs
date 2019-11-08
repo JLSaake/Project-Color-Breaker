@@ -88,6 +88,8 @@ public class GameManager : MonoBehaviour
     #region Other Helper Variables
     // Helper variables used in this class only
 
+    public AudioClip coinSound;
+    public AudioSource coinSource;
     private bool isPaused = false;
     private bool gameOverCompleted = false;
     private bool isHighScore = false;
@@ -114,6 +116,7 @@ public class GameManager : MonoBehaviour
         pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency, maxConsecutiveColor); // First procedural generation chunk
 
         SkyboxManager.UpdateSkybox();
+        
     }
 
     // Update is called once per frame
@@ -137,6 +140,7 @@ public class GameManager : MonoBehaviour
 
             Blocker.UpdatePlayerPos(player.transform.position.z);
             UpdateDistance();
+            CheckCoinSound();
 
         } else
         if (!playerAlive && !gameOverCompleted) // Player has died, round is over
@@ -279,6 +283,18 @@ public class GameManager : MonoBehaviour
         distance = (int) (Mathf.Round(player.transform.position.z) / distanceDivider);
         // Debug.Log(distance + " meters");
         pm.UpdateDistanceText(distance); // Want this here or in Update?
+    }
+
+    // Checks to see if the coin sound should be played
+    void CheckCoinSound()
+    {
+        int prevCoins = coins;
+        CalculateCoins();
+        if (prevCoins < coins)
+        {
+            coinSource.gameObject.transform.position = player.gameObject.transform.position;
+            coinSource.PlayOneShot(coinSound);
+        }
     }
 
     // Calculates currency for player based on deisred distance measurement (not raw player Z)
