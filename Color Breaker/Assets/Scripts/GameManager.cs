@@ -90,9 +90,13 @@ public class GameManager : MonoBehaviour
 
     public AudioClip coinSound;
     public AudioSource coinSource;
+    [Space(20)]
+    [Tooltip("Time to elapse before prompting player to tap to begin playing")]
+    public float tapPromptTime = 5.0f;
     private bool isPaused = false;
     private bool gameOverCompleted = false;
     private bool isHighScore = false;
+    private bool hasStarted = false; // bool flag to reduce calls in update
 
     #endregion
 
@@ -124,6 +128,21 @@ public class GameManager : MonoBehaviour
     {
         isPaused = pm.GetIsPaused();
         bool playerAlive = player.GetPlayerIsAlive();
+
+        if (!hasStarted)
+        {
+            if(Time.timeSinceLevelLoad >= tapPromptTime)
+            {
+                pm.ToggleTapToStart(true);
+            }
+            
+            hasStarted = player.GetPlayerStarted();
+            if (hasStarted)
+            {
+                pm.ToggleTapToStart(false);
+            }
+        }
+
 
 
         if (playerAlive && !isPaused) // Game is ongoing, player is moving

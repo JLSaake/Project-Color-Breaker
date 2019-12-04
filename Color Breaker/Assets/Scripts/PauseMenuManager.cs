@@ -23,6 +23,10 @@ public class PauseMenuManager : MonoBehaviour
     public Text highScoreText;
     public Text gameOverText;
 
+    [Header("TapToStart")]
+    public Text tapToStartText;
+    public ParticleSystem tapToStartParticles;
+
     private bool isPaused = false; // Is the game currently in a paused state (no gameplay occuring)
 
     
@@ -31,6 +35,7 @@ public class PauseMenuManager : MonoBehaviour
     void Start()
     {
         ResumeGame(); // Resets UI to gameplay state
+        ToggleTapToStart(false); // Turns off tap to start on load
     }
 
     // Getter for use in GameManager
@@ -105,5 +110,11 @@ public class PauseMenuManager : MonoBehaviour
     public void UpdateDistanceText(int distance)
     {
         distanceText.text = distance.ToString() + " meters";
+    }
+
+    public void ToggleTapToStart(bool turnOn)
+    {
+        tapToStartParticles.gameObject.SetActive(turnOn);
+        tapToStartText.gameObject.SetActive(turnOn);
     }
 }
