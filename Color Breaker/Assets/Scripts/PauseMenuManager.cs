@@ -21,6 +21,7 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject mainEndMenu;
     public Text coinsText;
     public Text highScoreText;
+    public Text gameOverText;
 
     private bool isPaused = false; // Is the game currently in a paused state (no gameplay occuring)
 
@@ -91,9 +92,11 @@ public class PauseMenuManager : MonoBehaviour
         if (highScore)
         {
             highScoreText.gameObject.SetActive(true);
+            gameOverText.gameObject.SetActive(false);
         } else
         {
             highScoreText.gameObject.SetActive(false);
+            gameOverText.gameObject.SetActive(true);
         }
     }
 

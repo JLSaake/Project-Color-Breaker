@@ -39,6 +39,14 @@ public class MainMenuManager : MonoBehaviour
         {
             coinsText.text = PlayerData.GetCoins() + " ¢";
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (mainStartMenu.activeInHierarchy == true) // Player in title menu and hits back key on android
+            {
+                Application.Quit(); // If pushing ios, check to see if this needs to be removed
+            }
+        }
     }
 
     // Wrapper function for loading the gameplay scene
