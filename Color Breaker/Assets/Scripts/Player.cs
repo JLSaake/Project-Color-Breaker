@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private bool isStarted = false; // Has the player initiated gameplay
     private Renderer rend;
     private MaterialPropertyBlock matBlock;
+    private ParticleSystem explosionParticles;
 
 
 
@@ -21,12 +22,13 @@ public class Player : MonoBehaviour
     {
         rend = gameObject.GetComponent<Renderer>();
         matBlock = new MaterialPropertyBlock();
+        explosionParticles = gameObject.GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isStarted) // Level has begun
+        if (isStarted && isAlive) // Level has begun
         {
             // Move player forward
             transform.Translate(Vector3.forward * speed * Time.deltaTime); 
@@ -52,6 +54,22 @@ public class Player : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         isAlive = false;
+        Blocker blocker = collision.gameObject.GetComponent<Blocker>();
+        blocker.Explode();
+        Explode();
+    }
+
+    private void Explode()
+    {
+        ParticleColor();
+        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        explosionParticles.Play();
+    }
+
+    private void ParticleColor()
+    {
+        ParticleSystem.MainModule main = explosionParticles.main;
+        main.startColor = matBlock.GetColor("_BaseColor");
     }
 
     #endregion

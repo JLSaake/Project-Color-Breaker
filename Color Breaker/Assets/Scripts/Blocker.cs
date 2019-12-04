@@ -12,7 +12,15 @@ public class Blocker : MonoBehaviour
     public Color prevTransColor; // Previous transparent color, used to see if color needs to be checked
     public Color objColor; // Color for the object, set on initialization
     private Color objTransColor; // Transparent version of color for the object
+    private ParticleSystem explosionParticles;
 
+
+    void Start()
+    {
+        explosionParticles = this.GetComponentInChildren<ParticleSystem>();
+        ParticleSystem.MainModule main = explosionParticles.main;
+        main.startColor = objColor;
+    }
 
     // Update is called once per frame
     void Update()
@@ -61,5 +69,11 @@ public class Blocker : MonoBehaviour
         {
             this.gameObject.layer = LayerMask.NameToLayer("BlockerActive");
         }
+    }
+
+    public void Explode()
+    {
+        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        explosionParticles.Play();
     }
 }

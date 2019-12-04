@@ -22,6 +22,7 @@ public class PauseMenuManager : MonoBehaviour
     public Text coinsText;
     public Text highScoreText;
     public Text gameOverText;
+    public float gameOverTime = 1.5f;
 
     [Header("TapToStart")]
     public Text tapToStartText;
@@ -89,10 +90,13 @@ public class PauseMenuManager : MonoBehaviour
     // Screen popup for the end of the game upon player's death
     public void EndGame(int coins, bool highScore)
     {
-        TogglePause(true);
         pauseButton.gameObject.SetActive(false);
+
+/*
+        TogglePause(true);
         pausePanel.SetActive(true);
         mainEndMenu.SetActive(true);
+*/
         coinsText.text = "+ " + coins + " ¢";
         if (highScore)
         {
@@ -103,6 +107,17 @@ public class PauseMenuManager : MonoBehaviour
             highScoreText.gameObject.SetActive(false);
             gameOverText.gameObject.SetActive(true);
         }
+
+        StartCoroutine(EndingCoroutine());
+    }
+
+    IEnumerator EndingCoroutine()
+    {
+        yield return new WaitForSeconds(gameOverTime);
+
+        TogglePause(true);
+        pausePanel.SetActive(true);
+        mainEndMenu.SetActive(true);
     }
 
 
