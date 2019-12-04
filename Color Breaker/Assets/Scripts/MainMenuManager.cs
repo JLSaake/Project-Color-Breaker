@@ -77,15 +77,15 @@ public class MainMenuManager : MonoBehaviour
     {
         colorMenu1.SetActive(true);
         colorMenu2.SetActive(false);
-        primaryColorButton.GetComponent<Image>().color = fadedGray;
-        secondaryColorButton.GetComponent<Image>().color = Color.white;
+        primaryColorButton.GetComponent<Image>().color = Color.white;
+        secondaryColorButton.GetComponent<Image>().color = fadedGray;
     }
 
     public void OpenColorMenu2()
     {
         colorMenu1.SetActive(false);
         colorMenu2.SetActive(true);
-        primaryColorButton.GetComponent<Image>().color = Color.white;
-        secondaryColorButton.GetComponent<Image>().color = fadedGray;
+        primaryColorButton.GetComponent<Image>().color = fadedGray;
+        secondaryColorButton.GetComponent<Image>().color = Color.white;
     }
 }
