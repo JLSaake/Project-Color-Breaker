@@ -90,6 +90,8 @@ public class GameManager : MonoBehaviour
 
     public AudioClip coinSound;
     public AudioSource coinSource;
+    [Tooltip("Gameobject with audio source to play on awake")]
+    public GameObject crashSounds;
     [Space(20)]
     [Tooltip("Time to elapse before prompting player to tap to begin playing")]
     public float tapPromptTime = 5.0f;
@@ -164,6 +166,7 @@ public class GameManager : MonoBehaviour
         } else
         if (!playerAlive && !gameOverCompleted) // Player has died, round is over
         {
+            CrashSound();
             CalculateCoins();
             isHighScore = distance > PlayerData.GetHighScore() ? true : false; // checks if current run is new high score
             pm.EndGame(coins, isHighScore);
@@ -290,6 +293,12 @@ public class GameManager : MonoBehaviour
             currFrequency = frequencyMax;
         }
 
+    }
+
+    private void CrashSound()
+    {
+        crashSounds.transform.position = player.transform.position;
+        crashSounds.SetActive(true);
     }
 
     #endregion

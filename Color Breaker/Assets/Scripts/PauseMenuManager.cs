@@ -22,7 +22,7 @@ public class PauseMenuManager : MonoBehaviour
     public Text coinsText;
     public Text highScoreText;
     public Text gameOverText;
-    public float gameOverTime = 1.5f;
+    public float gameOverTime = 2.2f; // must be close to length of breaking sound or slightly longer
 
     [Header("TapToStart")]
     public Text tapToStartText;
