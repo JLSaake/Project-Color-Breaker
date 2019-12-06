@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     private Renderer rend;
     private MaterialPropertyBlock matBlock;
     private ParticleSystem explosionParticles;
+    private AudioSource switchAudio;
+    [Tooltip("Sound to play when the player switches colors")]
+    public AudioClip switchClip;
 
 
 
@@ -23,6 +26,7 @@ public class Player : MonoBehaviour
         rend = gameObject.GetComponent<Renderer>();
         matBlock = new MaterialPropertyBlock();
         explosionParticles = gameObject.GetComponentInChildren<ParticleSystem>();
+        switchAudio = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -48,6 +52,13 @@ public class Player : MonoBehaviour
     {
         matBlock.SetColor("_BaseColor", color);
         rend.SetPropertyBlock(matBlock);
+        PlaySwitchSound();
+    }
+
+    // Plays sound when changing color
+    private void PlaySwitchSound()
+    {
+        switchAudio.PlayOneShot(switchClip);
     }
 
     // Collision with a blocker
