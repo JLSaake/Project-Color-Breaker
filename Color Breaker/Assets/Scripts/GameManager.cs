@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
     [Space(20)]
     [Tooltip("Time to elapse before prompting player to tap to begin playing")]
     public float tapPromptTime = 5.0f;
+    public GameObject playPanel;
     private bool isPaused = false;
     private bool gameOverCompleted = false;
     private bool isHighScore = false;
@@ -146,7 +147,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-
+        // TODO: Move these to their own functions to clean up Update
         if (playerAlive && !isPaused) // Game is ongoing, player is moving
         {
             // Camera follow player
@@ -166,7 +167,8 @@ public class GameManager : MonoBehaviour
         } else
         if (!playerAlive && !gameOverCompleted) // Player has died, round is over
         {
-            CrashSound();
+            // CrashSound();
+            playPanel.SetActive(false);
             CalculateCoins();
             isHighScore = distance > PlayerData.GetHighScore() ? true : false; // checks if current run is new high score
             pm.EndGame(coins, isHighScore);
@@ -205,6 +207,8 @@ public class GameManager : MonoBehaviour
         // Find other managers
         pg = GameObject.FindObjectOfType<ProceduralGenerator>();
         pm = GameObject.FindObjectOfType<PauseMenuManager>();
+
+        playPanel = GameObject.FindGameObjectWithTag("PlayPanel");
     }
 
     // Update material presets with chosen colors

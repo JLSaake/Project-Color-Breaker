@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
     [Tooltip("Speed of the player in the Z direction")]
     public float speed = 100; // Speed of the player
+    [Tooltip("Audio Clip to play when player dies")]
+    public AudioClip crashSound;
     private bool isAlive = true; // Is the player currently alive
     private bool isStarted = false; // Has the player initiated gameplay
     private Renderer rend;
@@ -29,7 +31,6 @@ public class Player : MonoBehaviour
         switchAudio = gameObject.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (isStarted && isAlive) // Level has begun
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour
 
     private void Explode()
     {
+        switchAudio.PlayOneShot(crashSound);
         ParticleColor();
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         explosionParticles.Play();

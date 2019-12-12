@@ -222,7 +222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &207274346
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1186,7 +1186,7 @@ GameObject:
   - component: {fileID: 672818699}
   m_Layer: 5
   m_Name: PlayPanel
-  m_TagString: Untagged
+  m_TagString: PlayPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2009,7 +2009,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1197783639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7222,7 +7222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1667910606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7298,7 +7298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1678025824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7315,8 +7315,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.5996094, y: -75.55}
-  m_SizeDelta: {x: 21.1, y: -97.3}
+  m_AnchoredPosition: {x: 2.5996094, y: -74.466}
+  m_SizeDelta: {x: 21.1, y: -95.133}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1678025825
 MonoBehaviour:
@@ -7428,6 +7428,7 @@ MonoBehaviour:
   coinSource: {fileID: 223445983}
   crashSounds: {fileID: 123227666}
   tapPromptTime: 3
+  playPanel: {fileID: 0}
 --- !u!4 &1700736177
 Transform:
   m_ObjectHideFlags: 0
@@ -7590,7 +7591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1970830224
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8045,5 +8046,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4406672559136567819, guid: 7ab97f19bd0e2434b9a0a9cf291f1208,
+        type: 3}
+      propertyPath: crashSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 10d3399ec07bd8341b11c04482ea9112, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ab97f19bd0e2434b9a0a9cf291f1208, type: 3}

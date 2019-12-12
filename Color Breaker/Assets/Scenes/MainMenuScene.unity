@@ -2120,7 +2120,7 @@ MonoBehaviour:
   secondaryColorButton: {fileID: 2075217244}
   colorMenu1: {fileID: 1903809177}
   colorMenu2: {fileID: 1588378066}
-  costOfEachColor: 00000000000000000a000000140000001e000000280000003200000064000000c80000005e010000f4010000e8030000
+  costOfEachColor: 000000000000000032000000320000003200000032000000320000003200000032000000320000003200000032000000
   coinsText: {fileID: 274116297}
   highScoreText: {fileID: 1358431741}
 --- !u!4 &765179265
@@ -2666,7 +2666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &897212188
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5209,7 +5209,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1391162812
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7785,7 +7785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2109665022
 RectTransform:
   m_ObjectHideFlags: 0
