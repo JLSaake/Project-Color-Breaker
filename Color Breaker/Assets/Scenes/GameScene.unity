@@ -7179,11 +7179,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrashSounds
       objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048026, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7237,26 +7232,6 @@ PrefabInstance:
     - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914585218984, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_Pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335913861408682, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_Pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335913905206992, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_Pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6439177749240390944, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: BypassReverbZones
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -8277,10 +8252,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4406672559136567819, guid: 7ab97f19bd0e2434b9a0a9cf291f1208,
-        type: 3}
-      propertyPath: crashSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 10d3399ec07bd8341b11c04482ea9112, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ab97f19bd0e2434b9a0a9cf291f1208, type: 3}

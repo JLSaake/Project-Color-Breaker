@@ -4920,6 +4920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 120
+  crashSound: {fileID: 8300000, guid: fd3dded29760b9a499667254d96c52c9, type: 3}
   switchClip: {fileID: 8300000, guid: 6e22834d38eca454ababcc67b981368b, type: 3}
 --- !u!54 &4406672559136567860
 Rigidbody:
