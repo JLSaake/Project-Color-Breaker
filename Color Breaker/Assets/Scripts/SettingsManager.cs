@@ -8,9 +8,13 @@ public class SettingsManager : MonoBehaviour
 
     //public GameObject soundEffectsButton;
     public Text soundEffectsText;
-    //public GameObject musicButton;
+    public Image soundEffectsImage;
+    public Sprite soundEffectsImageOn;
+    public Sprite soundEffectsImageOff;
     public Text musicText;
-    //public GameObject creditsButton;
+    public Image musicImage;
+    public Sprite musicImageOn;
+    public Sprite musicImageOff;
     public GameObject creditsDisplay;
     //public GameObject creditsBackButton; // return from credits display back to settings
 
@@ -35,10 +39,12 @@ public class SettingsManager : MonoBehaviour
         if (currSound == 1)
         {
             soundEffectsText.text = "SOUND ON ";
+            soundEffectsImage.sprite = soundEffectsImageOn;
         } else
         if (currSound == 0)
         {
             soundEffectsText.text = "SOUND OFF";
+            soundEffectsImage.sprite = soundEffectsImageOff;
         }
     }
 
@@ -55,10 +61,12 @@ public class SettingsManager : MonoBehaviour
         if (currMusic == 1)
         {
             musicText.text = "MUSIC ON ";
+            musicImage.sprite = musicImageOn;
         } else
         if (currMusic == 0)
         {
             musicText.text = "MUSIC OFF";
+            musicImage.sprite = musicImageOff;
         }
     }
 
