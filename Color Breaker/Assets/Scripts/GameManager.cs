@@ -324,8 +324,11 @@ public class GameManager : MonoBehaviour
         CalculateCoins();
         if (prevCoins < coins)
         {
-            coinSource.gameObject.transform.position = player.gameObject.transform.position;
-            coinSource.PlayOneShot(coinSound);
+            if (PlayerPrefsController.GetSoundEffects() == 1)
+            {
+                coinSource.gameObject.transform.position = player.gameObject.transform.position;
+                coinSource.PlayOneShot(coinSound);
+            }
         }
     }
 

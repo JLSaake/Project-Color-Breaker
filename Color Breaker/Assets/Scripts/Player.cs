@@ -59,7 +59,10 @@ public class Player : MonoBehaviour
     // Plays sound when changing color
     private void PlaySwitchSound()
     {
-        switchAudio.PlayOneShot(switchClip);
+        if (PlayerPrefsController.GetSoundEffects() == 1)
+        {
+            switchAudio.PlayOneShot(switchClip);
+        }
     }
 
     // Collision with a blocker
@@ -73,7 +76,10 @@ public class Player : MonoBehaviour
 
     private void Explode()
     {
-        switchAudio.PlayOneShot(crashSound);
+        if (PlayerPrefsController.GetSoundEffects() == 1) 
+        {
+            switchAudio.PlayOneShot(crashSound);
+        }
         ParticleColor();
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         explosionParticles.Play();
