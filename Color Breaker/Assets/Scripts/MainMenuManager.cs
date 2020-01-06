@@ -9,6 +9,7 @@ public class MainMenuManager : MonoBehaviour
 
     public GameObject mainStartMenu;
     public GameObject colorSelectionMenu;
+    public GameObject settingsMenu;
     public GameObject primaryColorButton;
     public GameObject secondaryColorButton;
     public GameObject colorMenu1;
@@ -68,6 +69,7 @@ public class MainMenuManager : MonoBehaviour
     {
         mainStartMenu.SetActive(true);
         colorSelectionMenu.SetActive(false);
+        settingsMenu.SetActive(false);
         colorMenu1.SetActive(false);
         colorMenu2.SetActive(false);
         needCoins = false;
@@ -95,5 +97,11 @@ public class MainMenuManager : MonoBehaviour
         colorMenu2.SetActive(true);
         primaryColorButton.GetComponent<Image>().color = fadedGray;
         secondaryColorButton.GetComponent<Image>().color = Color.white;
+    }
+
+    public void OpenSettingsMenu()
+    {
+        mainStartMenu.SetActive(false);
+        settingsMenu.SetActive(true);
     }
 }
