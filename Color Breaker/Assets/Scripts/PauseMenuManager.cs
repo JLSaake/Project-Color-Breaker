@@ -28,6 +28,13 @@ public class PauseMenuManager : MonoBehaviour
     public Text tapToStartText;
     public ParticleSystem tapToStartParticles;
 
+    public GameObject soundButton;
+    public Sprite soundOnSprite;
+    public Sprite soundOffSprite;
+    public GameObject musicButton;
+    public Sprite musicOnSprite;
+    public Sprite musicOffSprite;
+
     private bool isPaused = false; // Is the game currently in a paused state (no gameplay occuring)
 
     
@@ -37,6 +44,8 @@ public class PauseMenuManager : MonoBehaviour
     {
         ResumeGame(); // Resets UI to gameplay state
         ToggleTapToStart(false); // Turns off tap to start on load
+        SetSoundImage();
+        SetMusicImage();
     }
 
     // Getter for use in GameManager
@@ -132,4 +141,45 @@ public class PauseMenuManager : MonoBehaviour
         tapToStartParticles.gameObject.SetActive(turnOn);
         tapToStartText.gameObject.SetActive(turnOn);
     }
+
+    #region Sound Effects and Music
+
+    public void ToggleSoundEffects()
+    {
+        int newSound = PlayerPrefsController.GetSoundEffects() == 1 ? 0 : 1;
+        PlayerPrefsController.SetSoundEffects(newSound);
+        SetSoundImage();
+    }
+
+    private void SetSoundImage()
+    {
+        if (PlayerPrefsController.GetSoundEffects() == 1)
+        {
+            soundButton.GetComponent<Image>().sprite = soundOnSprite;
+        } else 
+        {
+            soundButton.GetComponent<Image>().sprite = soundOffSprite;
+        }
+    }
+
+    public void ToggleMusic()
+    {
+        int newMusic = PlayerPrefsController.GetMusic() == 1 ? 0 : 1;
+        PlayerPrefsController.SetMusic(newMusic);
+        SetMusicImage();
+    }
+
+    private void SetMusicImage()
+    {
+        if (PlayerPrefsController.GetMusic() == 1)
+        {
+            musicButton.GetComponent<Image>().sprite = musicOnSprite;
+        } else 
+        {
+            musicButton.GetComponent<Image>().sprite = musicOffSprite;
+        }
+    }
+
+
+    #endregion
 }
