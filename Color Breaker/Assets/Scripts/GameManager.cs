@@ -90,7 +90,8 @@ public class GameManager : MonoBehaviour
 
     public AudioClip coinSound;
     public AudioSource coinSource;
-    [Tooltip("Gameobject with audio source to play on awake")]
+    [Tooltip("Particle to burst play whenever the player receives a coin")]
+    public ParticleSystem coinParticleSystem;
     public GameObject crashSounds;
     [Space(20)]
     [Tooltip("Time to elapse before prompting player to tap to begin playing")]
@@ -324,6 +325,7 @@ public class GameManager : MonoBehaviour
         CalculateCoins();
         if (prevCoins < coins)
         {
+            coinParticleSystem.Play();
             if (PlayerPrefsController.GetSoundEffects() == 1)
             {
                 coinSource.gameObject.transform.position = player.gameObject.transform.position;
