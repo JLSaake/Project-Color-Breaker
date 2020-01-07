@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
     private Player player; // Player object
     private Camera mainCam; // Main camera that follows player
     private Vector3 camOffset; // Offset of the camera from the player
+    private AdsController adsController;
 
     #endregion
 
@@ -97,10 +98,12 @@ public class GameManager : MonoBehaviour
     [Tooltip("Time to elapse before prompting player to tap to begin playing")]
     public float tapPromptTime = 5.0f;
     public GameObject playPanel;
+    public GameObject pausePanel;
     private bool isPaused = false;
     private bool gameOverCompleted = false;
     private bool isHighScore = false;
     private bool hasStarted = false; // bool flag to reduce calls in update
+    private bool videoAdChecker = false;
 
     #endregion
 
@@ -124,12 +127,26 @@ public class GameManager : MonoBehaviour
         pg.GenerateChunk(currStartZ, currEndZ, currStep, currFrequency, maxConsecutiveColor); // First procedural generation chunk
 
         SkyboxManager.UpdateSkybox();
+
+        adsController.ShowVideoAd();
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (adsController.IsVideoAdPlaying())
+        {
+            videoAdChecker = true;
+            pausePanel.SetActive(true);
+        } else 
+        {
+            if (videoAdChecker)
+            {
+                videoAdChecker = false;
+                pausePanel.SetActive(false);
+            }
+        }
         isPaused = pm.GetIsPaused();
         bool playerAlive = player.GetPlayerIsAlive();
 
@@ -210,6 +227,8 @@ public class GameManager : MonoBehaviour
         pm = GameObject.FindObjectOfType<PauseMenuManager>();
 
         playPanel = GameObject.FindGameObjectWithTag("PlayPanel");
+
+        adsController = GameObject.FindObjectOfType<AdsController>();
     }
 
     // Update material presets with chosen colors
