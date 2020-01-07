@@ -13,6 +13,9 @@ public class AdsController : MonoBehaviour
     bool testMode = true; // For testing ads, turn off for release
     bool videoAdPlaying = false;
 
+    [Tooltip("Distance for the player to travel before triggering a video ad")]
+    public static int distanceForAd = 2000;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +75,15 @@ public class AdsController : MonoBehaviour
     public bool IsVideoAdPlaying()
     {
         return videoAdPlaying;
+    }
+
+    public bool DistanceSinceAdChecker()
+    {
+        if (PlayerPrefsController.GetDistanceSinceAd() > distanceForAd)
+        {
+            return true;
+        }
+        return false;
     }
      
 }

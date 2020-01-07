@@ -32,4 +32,20 @@ public class PlayerPrefsController : MonoBehaviour
     }
 
     #endregion
+
+    #region Ads
+
+    const string DISTANCE_SINCE_AD_KEY = "distance since ad";
+
+    public static void SetDistanceSinceAd(int distance)
+    {
+        PlayerPrefs.SetInt(DISTANCE_SINCE_AD_KEY, distance);
+    }
+
+    public static int GetDistanceSinceAd()
+    {
+        return PlayerPrefs.GetInt(DISTANCE_SINCE_AD_KEY, 0); // if unknown, default to 0
+    }
+
+    #endregion
 }

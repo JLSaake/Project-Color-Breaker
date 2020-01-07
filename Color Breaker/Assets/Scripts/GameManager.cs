@@ -128,7 +128,11 @@ public class GameManager : MonoBehaviour
 
         SkyboxManager.UpdateSkybox();
 
-        adsController.ShowVideoAd();
+        if (adsController.DistanceSinceAdChecker())
+        {
+            PlayerPrefsController.SetDistanceSinceAd(0); // reset the distance counter
+            adsController.ShowVideoAd();
+        }
         
     }
 
@@ -192,6 +196,7 @@ public class GameManager : MonoBehaviour
             pm.EndGame(coins, isHighScore);
             SaveAtEndGame();
             gameOverCompleted = true;
+            AddToDistance();
         }
         
     
@@ -372,6 +377,11 @@ public class GameManager : MonoBehaviour
             PlayerData.SetHighScore(distance);
         }
         SaveSystem.SaveGame();
+    }
+
+    private void AddToDistance()
+    {
+        PlayerPrefsController.SetDistanceSinceAd(distance + PlayerPrefsController.GetDistanceSinceAd());
     }
     
 }
