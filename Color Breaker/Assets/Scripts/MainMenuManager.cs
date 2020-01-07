@@ -10,6 +10,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject mainStartMenu;
     public GameObject colorSelectionMenu;
     public GameObject settingsMenu;
+    public GameObject creditsMenu;
     public GameObject primaryColorButton;
     public GameObject secondaryColorButton;
     public GameObject colorMenu1;
@@ -74,6 +75,7 @@ public class MainMenuManager : MonoBehaviour
         colorMenu2.SetActive(false);
         needCoins = false;
         highScoreText.text = "High Score: " + PlayerData.GetHighScore() + " meters";
+        creditsMenu.SetActive(false);
     }
 
     public void BackToMainMenu()
@@ -103,5 +105,12 @@ public class MainMenuManager : MonoBehaviour
     {
         mainStartMenu.SetActive(false);
         settingsMenu.SetActive(true);
+        creditsMenu.SetActive(false);        
+    }
+
+    public void OpenCreditsMenu()
+    {
+        settingsMenu.SetActive(false);
+        creditsMenu.SetActive(true);        
     }
 }
