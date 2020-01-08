@@ -14,7 +14,7 @@ public class AdsController : MonoBehaviour
     bool videoAdPlaying = false;
 
     [Tooltip("Distance for the player to travel before triggering a video ad")]
-    public static int distanceForAd = 2000;
+    public static int distanceForAd = 1500;
 
     // Start is called before the first frame update
     void Start()
