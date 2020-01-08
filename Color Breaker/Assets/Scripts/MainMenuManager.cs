@@ -18,6 +18,7 @@ public class MainMenuManager : MonoBehaviour
     public int[] costOfEachColor; // NEEDS TO BE SAME LEN AS COLOR MENUS
     public Text coinsText;
     public Text highScoreText;
+    public GameObject resetScoreWindow;
     private Color fadedGray = new Color(.7f, .7f, .7f);
     private bool needCoins = false;
 
@@ -76,6 +77,7 @@ public class MainMenuManager : MonoBehaviour
         needCoins = false;
         highScoreText.text = "High Score: " + PlayerData.GetHighScore() + " meters";
         creditsMenu.SetActive(false);
+        CloseResetScoreWindow();
     }
 
     public void BackToMainMenu()
@@ -112,5 +114,22 @@ public class MainMenuManager : MonoBehaviour
     {
         settingsMenu.SetActive(false);
         creditsMenu.SetActive(true);        
+    }
+
+    public void OpenResetScoreWindow()
+    {
+        resetScoreWindow.SetActive(true);
+    }
+
+    public void CloseResetScoreWindow()
+    {
+        resetScoreWindow.SetActive(false);
+    }
+
+    public void ResetHighScore()
+    {
+        CloseResetScoreWindow();
+        PlayerData.SetHighScore(0);
+        SaveSystem.SaveGame();
     }
 }
