@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
     private Camera mainCam; // Main camera that follows player
     private Vector3 camOffset; // Offset of the camera from the player
     private AdsController adsController;
+    private MusicManager musicManager;
 
     #endregion
 
@@ -165,6 +166,7 @@ public class GameManager : MonoBehaviour
             if (hasStarted)
             {
                 pm.ToggleTapToStart(false);
+                musicManager.PlayMusic();
             }
         }
 
@@ -197,6 +199,7 @@ public class GameManager : MonoBehaviour
             SaveAtEndGame();
             gameOverCompleted = true;
             AddToDistance();
+            musicManager.PauseMusic();
         }
         
     
@@ -234,6 +237,8 @@ public class GameManager : MonoBehaviour
         playPanel = GameObject.FindGameObjectWithTag("PlayPanel");
 
         adsController = GameObject.FindObjectOfType<AdsController>();
+
+        musicManager = GameObject.FindObjectOfType<MusicManager>();
     }
 
     // Update material presets with chosen colors

@@ -17,7 +17,6 @@ public class MusicManager : MonoBehaviour
         if (PlayerPrefsController.GetMusic() == 1)
         {
             musicOn = true;
-            PlayMusic();
         } else
         {
             musicOn = false;
@@ -25,11 +24,14 @@ public class MusicManager : MonoBehaviour
     }
 
     // Starts music clip
-    private void PlayMusic()
+    public void PlayMusic()
     {
-        musicAudio.loop = true;
-        musicAudio.clip = loopingMusic;
-        musicAudio.Play();
+        if (musicOn)
+        {
+            musicAudio.loop = true;
+            musicAudio.clip = loopingMusic;
+            musicAudio.Play();
+        }
     }
 
     // Pauses music upon opening game pause menu
@@ -45,8 +47,8 @@ public class MusicManager : MonoBehaviour
         {
             if (!musicOn) // music turned on from pause menu
             {
-                PlayMusic();
                 musicOn = true;
+                PlayMusic();
             } else // music was playing before pause menu
             {
                 musicAudio.UnPause();

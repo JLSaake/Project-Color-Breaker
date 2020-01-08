@@ -1971,7 +1971,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 935997c2abbcd9b4dacc520f49398d44, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -2069,7 +2069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b38f46ae3f55a047a58dcceaaf1f5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loopingMusic: {fileID: 0}
+  loopingMusic: {fileID: 8300000, guid: 935997c2abbcd9b4dacc520f49398d44, type: 3}
 --- !u!4 &1097499135
 Transform:
   m_ObjectHideFlags: 0
