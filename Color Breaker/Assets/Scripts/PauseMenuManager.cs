@@ -25,6 +25,8 @@ public class PauseMenuManager : MonoBehaviour
     public float gameOverTime = 2.2f; // must be close to length of breaking sound or slightly longer
 
     public ParticleSystem highScoreParticles;
+    public AudioClip highscoreSound;
+    private AudioSource highScoreAudioSource;
 
     [Header("TapToStart")]
     public Text tapToStartText;
@@ -50,6 +52,7 @@ public class PauseMenuManager : MonoBehaviour
         ToggleTapToStart(false); // Turns off tap to start on load
         SetSoundImage();
         SetMusicImage();
+        highScoreAudioSource = highScoreParticles.GetComponent<AudioSource>();
     }
 
     // Getter for use in GameManager
@@ -136,7 +139,17 @@ public class PauseMenuManager : MonoBehaviour
         mainEndMenu.SetActive(true);
         if (playEndParticles)
         {
-            highScoreParticles.Play();
+            PlayHighScoreEffects();
+        }
+    }
+
+    private void PlayHighScoreEffects()
+    {
+        highScoreParticles.Play();
+        highScoreAudioSource.clip = highscoreSound;
+        if (PlayerPrefsController.GetSoundEffects() == 1)
+        {
+            highScoreAudioSource.Play();
         }
     }
 
