@@ -140,6 +140,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.frameCount % 30 == 0)
+        {
+            System.GC.Collect();
+        }
+
         if (adsController.IsVideoAdPlaying())
         {
             videoAdChecker = true;

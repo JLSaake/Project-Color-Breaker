@@ -13,28 +13,51 @@ public class ProceduralGenerator : MonoBehaviour
     private int consecutiveColor = 0; // Counter for cosecutive colors generated
     private int colorIndex = 0; // Index of most recently generated color
 
+    #region private generation variables
 
-    // Generates next portion of the level
+    int p_startZ;
+    int p_endZ;
+    int p_step;
+    float p_frequency;
+    int p_maxConsecutive;
+
+    #endregion
+
+
+
+    // Sets generation variables and calls coroutine
     public void GenerateChunk(int startZ, int endZ, int step, float frequency, int maxConsecutive)
     {
-        int currZ = startZ;
-        currZ += step;
+        p_startZ = startZ;
+        p_endZ = endZ;
+        p_step = step;
+        p_frequency = frequency;
+        p_maxConsecutive = maxConsecutive;
+
+        StartCoroutine("GenerateChunkCoroutine");
+    }
+
+    private IEnumerator GenerateChunkCoroutine()
+    {
+        int currZ = p_startZ;
+        currZ += p_step;
 
         // Spawn new floor
         GameObject newFloor = Instantiate(floor);
-        newFloor.transform.localScale = new Vector3(newFloor.transform.localScale.x, newFloor.transform.localScale.y, endZ - startZ);
-        newFloor.transform.position = new Vector3(newFloor.transform.position.x, newFloor.transform.position.y, (endZ + startZ)/2);
+        newFloor.transform.localScale = new Vector3(newFloor.transform.localScale.x, newFloor.transform.localScale.y, p_endZ - p_startZ);
+        newFloor.transform.position = new Vector3(newFloor.transform.position.x, newFloor.transform.position.y, (p_endZ + p_startZ)/2);
 
         // Run through blocker spawning
         do
         {
-            if (SpawnCheck(frequency)) // If a blocker is going to be spawned
+            if (SpawnCheck(p_frequency)) // If a blocker is going to be spawned
             {
-                SpawnBlocker(currZ, maxConsecutive);
+                SpawnBlocker(currZ, p_maxConsecutive);
 
             }
-            currZ += step;
-        }   while (currZ + step <= endZ);
+            currZ += p_step;
+        }   while (currZ + p_step <= p_endZ);
+        yield return new WaitForSeconds(0.0f);
     }
 
     // Checks to see if a blocker should be spawned, given frequency
