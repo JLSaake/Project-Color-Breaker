@@ -28,7 +28,7 @@ public class Blocker : MonoBehaviour
         // Check to see if player has changed color
         if (prevTransColor != currTransColor)
         {
-            ColorCheck();
+            StartCoroutine("ColorCheck");
             prevTransColor = currTransColor;
         }
         // Checks to see if the player has cleared the blocker
@@ -60,7 +60,7 @@ public class Blocker : MonoBehaviour
     }
 
     // Check to see if this blocker matches the current player color
-    private void ColorCheck()
+    private IEnumerator ColorCheck()
     {
         if(objColor == currTransColor) // The player is currently the color of this blocker
         {
@@ -69,6 +69,7 @@ public class Blocker : MonoBehaviour
         {
             this.gameObject.layer = LayerMask.NameToLayer("BlockerActive");
         }
+        yield return new WaitForSeconds(0.0f);
     }
 
     public void Explode()
