@@ -24,9 +24,12 @@ public class PauseMenuManager : MonoBehaviour
     public Text gameOverText;
     public float gameOverTime = 2.2f; // must be close to length of breaking sound or slightly longer
 
+    public ParticleSystem highScoreParticles;
+
     [Header("TapToStart")]
     public Text tapToStartText;
     public ParticleSystem tapToStartParticles;
+    
 
     public GameObject soundButton;
     public Sprite soundOnSprite;
@@ -36,6 +39,7 @@ public class PauseMenuManager : MonoBehaviour
     public Sprite musicOffSprite;
 
     private bool isPaused = false; // Is the game currently in a paused state (no gameplay occuring)
+    private bool playEndParticles = false;
 
     
 
@@ -111,10 +115,13 @@ public class PauseMenuManager : MonoBehaviour
         {
             highScoreText.gameObject.SetActive(true);
             gameOverText.gameObject.SetActive(false);
+            playEndParticles = true;
+
         } else
         {
             highScoreText.gameObject.SetActive(false);
             gameOverText.gameObject.SetActive(true);
+            playEndParticles = false;
         }
 
         StartCoroutine(EndingCoroutine());
@@ -124,9 +131,13 @@ public class PauseMenuManager : MonoBehaviour
     {
         yield return new WaitForSeconds(gameOverTime);
 
-        TogglePause(true);
+        // TogglePause(true);
         pausePanel.SetActive(true);
         mainEndMenu.SetActive(true);
+        if (playEndParticles)
+        {
+            highScoreParticles.Play();
+        }
     }
 
 
