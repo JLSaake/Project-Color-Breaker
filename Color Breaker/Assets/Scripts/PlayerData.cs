@@ -5,10 +5,16 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
 
-    private static Color color1 = Color.blue;
-    private static Color color2 = Color.red;
-    private static int coins = 0;
-    private static int highScore = 0;
+    /*
+        Public interface for scripts to access game data.
+        Temporary storage for game data, variables set
+        when game data is updated.
+    */
+
+    private static Color color1 = Color.blue; // Current player primary color, defaults if none found
+    private static Color color2 = Color.red; // Current player secondary color, defaults if none found
+    private static int coins = 0; // Current player coin total
+    private static int highScore = 0; // Current high score
     public static int[] colorCosts; // Cost of each color item, first 2 should be 0 -> controlled in MainMenuManager
     
 

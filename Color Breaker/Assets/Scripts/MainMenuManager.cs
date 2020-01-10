@@ -7,26 +7,53 @@ using UnityEngine.SceneManagement;
 public class MainMenuManager : MonoBehaviour
 {
 
+    /*
+        Manager responsible for controlling main menu UI elements.
+    */
+
+    #region UI Gameobjects
+
+    [Header("UI GameObjects")]
+    [Tooltip("Title screen gameobject with UI children")]
     public GameObject mainStartMenu;
+    [Tooltip("Color selection screen gameobject with UI children")]
     public GameObject colorSelectionMenu;
+    [Tooltip("Settings selection screen gameobject with UI children")]
     public GameObject settingsMenu;
+    [Tooltip("Credits selection screen gameobject with UI children")]
     public GameObject creditsMenu;
+    [Tooltip("Button for selecting primary color menu")]
     public GameObject primaryColorButton;
+    [Tooltip("Button for selecting secondary color menu")]
     public GameObject secondaryColorButton;
+    [Tooltip("Gameobject with UI children for primary color menu")]
     public GameObject colorMenu1;
+    [Tooltip("Gameobject with UI children for secondary color menu")]
     public GameObject colorMenu2;
-    public int[] costOfEachColor; // NEEDS TO BE SAME LEN AS COLOR MENUS
-    public Text coinsText;
-    public Text highScoreText;
+    [Tooltip("Window for asking the player if they wish to reset their high score")]
     public GameObject resetScoreWindow;
-    private Color fadedGray = new Color(.7f, .7f, .7f);
-    private bool needCoins = false;
 
+    [Header("Text Objects")]
+    [Tooltip("Text for displaying player's total coins")]
+    public Text coinsText;
+    [Tooltip("Text for displaying player's current high score")]
+    public Text highScoreText;
 
+    [Header("Color Costs")]
+    [Tooltip("Cost for each color, NEEDS TO BE THE SAME LENGTH AS COLOR MENUS")]
+    public int[] costOfEachColor; // NEEDS TO BE SAME LEN AS COLOR MENUS
 
+    #endregion
+
+    #region Helper variables
+
+    private Color fadedGray = new Color(.7f, .7f, .7f); // Color of unselected primary or secondary color button
+    private bool needCoins = false; // Does the player's coin total need to be displayed
     private const string GAMESCENE = "GameScene"; // Scene where gameplay takes place
 
-    // Start is called before the first frame update
+    #endregion
+
+    // Set color costs and load game data
     void Start()
     {
         PlayerData.SetColorCosts(costOfEachColor);
@@ -52,6 +79,8 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    #region Menu Opening and Closing
+
     // Wrapper function for loading the gameplay scene
     public void StartGame()
     {
@@ -67,6 +96,7 @@ public class MainMenuManager : MonoBehaviour
         needCoins = true;
     }
 
+    // Opens the main menu, used to close all other menus
     public void OpenMainMenu()
     {
         mainStartMenu.SetActive(true);
@@ -80,6 +110,7 @@ public class MainMenuManager : MonoBehaviour
         CloseResetScoreWindow();
     }
 
+    // Saves game and returns to main menu
     public void BackToMainMenu()
     {
         SaveSystem.SaveGame();
@@ -87,6 +118,7 @@ public class MainMenuManager : MonoBehaviour
         needCoins = false;
     }
 
+    // Opens primary color menu
     public void OpenColorMenu1()
     {
         colorMenu1.SetActive(true);
@@ -95,6 +127,7 @@ public class MainMenuManager : MonoBehaviour
         secondaryColorButton.GetComponent<Image>().color = fadedGray;
     }
 
+    // Opens secondary color menu
     public void OpenColorMenu2()
     {
         colorMenu1.SetActive(false);
@@ -103,6 +136,7 @@ public class MainMenuManager : MonoBehaviour
         secondaryColorButton.GetComponent<Image>().color = Color.white;
     }
 
+    // Opens settings menu
     public void OpenSettingsMenu()
     {
         mainStartMenu.SetActive(false);
@@ -110,26 +144,32 @@ public class MainMenuManager : MonoBehaviour
         creditsMenu.SetActive(false);        
     }
 
+    // Opens credits menu from settings menu
     public void OpenCreditsMenu()
     {
         settingsMenu.SetActive(false);
         creditsMenu.SetActive(true);        
     }
 
+    // Opens window to ask player if they wish to reset their high score
     public void OpenResetScoreWindow()
     {
         resetScoreWindow.SetActive(true);
     }
 
+    // Closes window asking player if they wish to reset their high score
     public void CloseResetScoreWindow()
     {
         resetScoreWindow.SetActive(false);
     }
 
+    // Resets the player's current high score and closes the window
     public void ResetHighScore()
     {
         CloseResetScoreWindow();
         PlayerData.SetHighScore(0);
         SaveSystem.SaveGame();
     }
+
+    #endregion
 }

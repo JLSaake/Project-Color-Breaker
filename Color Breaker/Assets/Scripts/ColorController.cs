@@ -5,20 +5,12 @@ using UnityEngine.UI;
 
 public class ColorController : MonoBehaviour
 {
+    /*
+        Controller responsible for handling Color purchasing,
+        and selection (and its UI) in the main menu scene.
+    */
 
-    // Rewrite
-
-    // Start
-        // Match selected color for color 1 & 2 from player data
-        // Update "selected" text
-
-    // Have array with all color "buttons"
-    // Update color function (takes color# and which color button)
-        // gives where in array to get color from
-        // get color from button image in array
-        // set color in playerData to set color
-
-    // TODO: use colorblind friendly colors
+    #region Public variables
 
     [Header("Color Buttons")]
     [Tooltip("Array of colors for gameplay, must be greater than or equal to number of buttons")]
@@ -27,6 +19,8 @@ public class ColorController : MonoBehaviour
     public GameObject[] Buttons1;
     [Tooltip("Array of button gameobjects for selecting secondary color")]
     public GameObject[] Buttons2;
+
+    [Header("Purchase Windows")]
     [Tooltip("Popup gameobject for confirming color purchase")]
     public GameObject purchaseWindow; // Popup that asks user if they want to purchase color
     [Tooltip("Text object for displaying purchase text and price")]
@@ -35,13 +29,18 @@ public class ColorController : MonoBehaviour
     public GameObject notEnoughCoinsWindow; // Popup that notifies user they do not have enough coins for color
     [Tooltip("Text object for displaying how many coins the player needs to purchase color")]
     public Text notEnoughCoinsText; // Text to edit to tell user how many coins short they are
+
+    #endregion
+
+    #region Helper variables
     
-    int Color1Index = 0;
-    int Color2Index = 1;
+    private int Color1Index = 0; // Local variable for primary color seletion index
+    private int Color2Index = 1; // Local variable for secondary color selection index
+    private int purchaseIndex = 0; // Local variable for index of color being purchased
+    
+    #endregion
 
-    private int purchaseIndex = 0;
-
-
+    // Initialize colors and prices, and start all popups closed
     void Start()
     {
         SetButtonColorsAndPrices();
@@ -49,7 +48,9 @@ public class ColorController : MonoBehaviour
         PopupWindowsClosed();
     }
 
-    // TODO: merge into a single loop
+    #region Set UI Elements
+
+    // Set the color and price for each button in the UI from save data
     void SetButtonColorsAndPrices()
     {
         int cost = 0;
@@ -79,6 +80,7 @@ public class ColorController : MonoBehaviour
         }
     }
 
+    // Set the text for the primary and secondary colors to display in the UI
     void SetPrimarySecondaryFromData()
     {
         for (int c = 0; c < ColorSelection.Length; ++c)
@@ -97,7 +99,6 @@ public class ColorController : MonoBehaviour
     }
 
 
-    // TODO: combine to one function via second event trigger
     // Handles setting the primary color, and displaying popup windows for unpurchased colors
     public void SetColor1(int buttonIndex)
     {
@@ -152,6 +153,9 @@ public class ColorController : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region Purchase and window management
 
     // Returns one of three ints (positive means able to buy, negative means not enough coins, zero means already purchased)
     public static int CheckColorPrice(int colorIndex)
@@ -171,6 +175,7 @@ public class ColorController : MonoBehaviour
         }
     }
 
+    // Purchasing the selected color
     public void PurchaseColor()
     {
         PlayerData.AddCoins(-(PlayerData.GetColorCost(purchaseIndex)));
@@ -179,6 +184,7 @@ public class ColorController : MonoBehaviour
         ClosePurchaseWindow();
     }
 
+    // Close the purchase window
     public void ClosePurchaseWindow()
     {
         purchaseWindow.SetActive(false);
@@ -186,21 +192,26 @@ public class ColorController : MonoBehaviour
 
     }
 
+    // Close the cannot purchase window
     public void CloseNotEnoughCoinsWindow()
     {
         notEnoughCoinsWindow.SetActive(false);
     }
 
+    // Close all purchase windows
     public void PopupWindowsClosed()
     {
         notEnoughCoinsWindow.SetActive(false);
         purchaseWindow.SetActive(false);
     }
 
+    // Helper function, sets text value for button in both Primary and Secondary UI elements
     private void _SetBothButtons(int index, string message)
     {
         Buttons1[index].GetComponentInChildren<Text>().text = message;
         Buttons2[index].GetComponentInChildren<Text>().text = message;
     }
+
+    #endregion
 
 }

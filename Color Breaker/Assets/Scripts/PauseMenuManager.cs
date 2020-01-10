@@ -7,45 +7,80 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
 {
+    /*
+        Manager responsible for handling all menu
+        logic and time manipulation while gameplay 
+        is paused or ended.
+    */
+
+    #region Gameplay UI
+    
+    [Header("Gameplay UI")]
     [Tooltip("Text field for displaying distance to the player")]
     public Text distanceText;
     [Tooltip("Panel that translates touch input into gameplay aciton")]
     public GameObject playPanel;
     [Tooltip("Button to stop gameplay")]
     public Button pauseButton;
+
+    #endregion
+
+    #region Pause and Endgame UI
+
+    [Header("Pause and Endgame UI")]
     [Tooltip("Tinted panel that comes up to block gameplay action from occuring")]
     public GameObject pausePanel;
     [Tooltip("GameObject that cointains pause menu UI elements as children")]
     public GameObject mainPauseMenu;
     [Tooltip("GameObject that contains end of game UI elements as children")]
     public GameObject mainEndMenu;
+    [Tooltip("Text displaying coins earned at end of game")]
     public Text coinsText;
+    [Tooltip("Text dispaying if the player received a high score at the end of the game")]
     public Text highScoreText;
+    [Tooltip("Text displaying if the player did not receive a high score at the end of the game")]
     public Text gameOverText;
+    [Tooltip("Delay in displaying endgame UI after the player dies")]
     public float gameOverTime = 2.2f; // must be close to length of breaking sound or slightly longer
+    private bool isPaused = false; // Is the game currently in a paused state (no gameplay occuring)
 
-    public ParticleSystem highScoreParticles;
-    public AudioClip highscoreSound;
-    private AudioSource highScoreAudioSource;
 
-    [Header("TapToStart")]
-    public Text tapToStartText;
-    public ParticleSystem tapToStartParticles;
-    
-
+    [Header ("Music and Sound UI")]
+    [Tooltip("Button where current sound state sprite is displayed")]
     public GameObject soundButton;
+    [Tooltip("Sprite to display when sound is on")]
     public Sprite soundOnSprite;
+    [Tooltip("Sprite to display when sound is off")]
     public Sprite soundOffSprite;
+    [Tooltip("Button where current music state is displayed")]
     public GameObject musicButton;
+    [Tooltip("Sprite to dispaly when music is on")]
     public Sprite musicOnSprite;
+    [Tooltip("Sprite to dispaly when music is off")]
     public Sprite musicOffSprite;
 
-    private bool isPaused = false; // Is the game currently in a paused state (no gameplay occuring)
-    private bool playEndParticles = false;
+    #endregion
 
+    #region Particles and Audio
+
+    [Header("High Score")]
+    [Tooltip("Particles to play when the player reaches a new high score")]
+    public ParticleSystem highScoreParticles;
+    [Tooltip("Sound to play when the player reaches a new high score")]
+    public AudioClip highscoreSound;
+    private AudioSource highScoreAudioSource; // Audio source to play high score sound with
+    private bool playEndParticles = false; // Do high score particles get played
+
+
+    [Header("TapToStart")]
+    [Tooltip("Text to display when tap to start is active")]
+    public Text tapToStartText;
+    [Tooltip("Particles to dispaly when tap to start is active")]
+    public ParticleSystem tapToStartParticles;
     
+    #endregion    
 
-    // Start is called before the first frame update
+    // Set UI to gameplay state and update music and sound icons
     void Start()
     {
         ResumeGame(); // Resets UI to gameplay state
@@ -54,6 +89,8 @@ public class PauseMenuManager : MonoBehaviour
         SetMusicImage();
         highScoreAudioSource = highScoreParticles.GetComponent<AudioSource>();
     }
+
+    #region Menu Logic
 
     // Getter for use in GameManager
     public bool GetIsPaused()
@@ -74,9 +111,6 @@ public class PauseMenuManager : MonoBehaviour
             Time.timeScale = 1;
         }
     }
-
-
-// TODO: If no settings menu in pause menu, then go ahead and make into one function with bool variable
 
     // For stopping gameplay and presenting options to the player
     public void PauseGame()
@@ -107,12 +141,6 @@ public class PauseMenuManager : MonoBehaviour
     public void EndGame(int coins, bool highScore)
     {
         pauseButton.gameObject.SetActive(false);
-
-/*
-        TogglePause(true);
-        pausePanel.SetActive(true);
-        mainEndMenu.SetActive(true);
-*/
         coinsText.text = "+ " + coins + " ¢";
         if (highScore)
         {
@@ -130,11 +158,11 @@ public class PauseMenuManager : MonoBehaviour
         StartCoroutine(EndingCoroutine());
     }
 
+    // Wait to display endgame UI elements
     IEnumerator EndingCoroutine()
     {
         yield return new WaitForSeconds(gameOverTime);
 
-        // TogglePause(true);
         pausePanel.SetActive(true);
         mainEndMenu.SetActive(true);
         if (playEndParticles)
@@ -143,6 +171,7 @@ public class PauseMenuManager : MonoBehaviour
         }
     }
 
+    // Play high score sound and particles
     private void PlayHighScoreEffects()
     {
         highScoreParticles.Play();
@@ -166,8 +195,11 @@ public class PauseMenuManager : MonoBehaviour
         tapToStartText.gameObject.SetActive(turnOn);
     }
 
+    #endregion
+
     #region Sound Effects and Music
 
+    // Check to see if the sound effects need to be updated
     public void ToggleSoundEffects()
     {
         int newSound = PlayerPrefsController.GetSoundEffects() == 1 ? 0 : 1;
@@ -175,6 +207,7 @@ public class PauseMenuManager : MonoBehaviour
         SetSoundImage();
     }
 
+    // Update sound effects sprite
     private void SetSoundImage()
     {
         if (PlayerPrefsController.GetSoundEffects() == 1)
@@ -186,6 +219,7 @@ public class PauseMenuManager : MonoBehaviour
         }
     }
 
+    // Check to see if the music needs to be updated
     public void ToggleMusic()
     {
         int newMusic = PlayerPrefsController.GetMusic() == 1 ? 0 : 1;
@@ -193,6 +227,7 @@ public class PauseMenuManager : MonoBehaviour
         SetMusicImage();
     }
 
+    // Update music sprite
     private void SetMusicImage()
     {
         if (PlayerPrefsController.GetMusic() == 1)
@@ -203,7 +238,6 @@ public class PauseMenuManager : MonoBehaviour
             musicButton.GetComponent<Image>().sprite = musicOffSprite;
         }
     }
-
 
     #endregion
 }

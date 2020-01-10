@@ -5,6 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    /*
+        Manager that handles main gameplay calculations and loop.
+        Main conenction point for managers and objects.
+        If one manager needs to talk to another, it should
+        go through here to prevent spaghetti code.
+    */
+
     #region BlockerMaterials & Colors
     // Materials that will be used for procedurally generating blockers
     
@@ -77,39 +84,43 @@ public class GameManager : MonoBehaviour
     #region Private Managers and Objects
     // Other sub-managers and objects that are found by script, and their related variables
 
-    private PauseMenuManager pm;
+    private PauseMenuManager pm; // Handles pause menu and time manipulation
     private ProceduralGenerator pg; // Handles generation of blockers
     private Player player; // Player object
     private Camera mainCam; // Main camera that follows player
     private Vector3 camOffset; // Offset of the camera from the player
-    private AdsController adsController;
-    private MusicManager musicManager;
+    private AdsController adsController; // Handles ad placement and playing
+    private MusicManager musicManager; // Handles game music
 
     #endregion
 
     #region Other Helper Variables
     // Helper variables used in this class only
 
+    [Tooltip("Sound to be played when the player receives a coin")]
     public AudioClip coinSound;
+    [Tooltip("Gameobject to play coin sound")]
     public AudioSource coinSource;
     [Tooltip("Particle to burst play whenever the player receives a coin")]
     public ParticleSystem coinParticleSystem;
-    public GameObject crashSounds;
-    [Space(20)]
+
+    [Header("Helpers")]
     [Tooltip("Time to elapse before prompting player to tap to begin playing")]
     public float tapPromptTime = 5.0f;
+    [Tooltip("Panel player taps to for gameplay")]
     public GameObject playPanel;
+    [Tooltip("Panel that obscures play panel during ads and pause menu")]
     public GameObject pausePanel;
-    private bool isPaused = false;
-    private bool gameOverCompleted = false;
-    private bool isHighScore = false;
+    private bool isPaused = false; // Is the game currently paused
+    private bool gameOverCompleted = false; // Is the game currently ended
+    private bool isHighScore = false; // Did the player reach a high score
     private bool hasStarted = false; // bool flag to reduce calls in update
-    private bool videoAdChecker = false;
+    private bool videoAdChecker = false; // Is a video ad being played
 
     #endregion
 
 
-    // Start is called before the first frame update
+    // Initialize managers, colors, and start procedural generation
     void Start()
     {
         colors = new Color[2];
@@ -129,18 +140,19 @@ public class GameManager : MonoBehaviour
 
         SkyboxManager.UpdateSkybox();
 
-        if (adsController.DistanceSinceAdChecker())
+        if (adsController.DistanceSinceAdChecker()) // Has the player gone far enough to trigger a video ad
         {
-            PlayerPrefsController.SetDistanceSinceAd(0); // reset the distance counter
+            PlayerPrefsController.SetDistanceSinceAd(0); // Reset the distance counter
             adsController.ShowVideoAd();
         }
         
     }
 
-    // Update is called once per frame
+    // MAIN GAMEPLAY LOOP
     void Update()
     {
 
+        // Is a video ad being played
         if (adsController.IsVideoAdPlaying())
         {
             videoAdChecker = true;
@@ -153,6 +165,8 @@ public class GameManager : MonoBehaviour
                 pausePanel.SetActive(false);
             }
         }
+
+        // Has the game started
         isPaused = pm.GetIsPaused();
         bool playerAlive = player.GetPlayerIsAlive();
 
@@ -172,7 +186,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        // TODO: Move these to their own functions to clean up Update
+        // Is the game ongoing, paused, or over
         if (playerAlive && !isPaused) // Game is ongoing, player is moving
         {
             // Camera follow player
@@ -192,7 +206,6 @@ public class GameManager : MonoBehaviour
         } else
         if (!playerAlive && !gameOverCompleted) // Player has died, round is over
         {
-            // CrashSound();
             playPanel.SetActive(false);
             CalculateCoins();
             isHighScore = distance > PlayerData.GetHighScore() ? true : false; // checks if current run is new high score
@@ -211,7 +224,7 @@ public class GameManager : MonoBehaviour
     // Security check to ensure that there are enough colors implemented into the game
     private void _ColorCheck()
     {
-        if (colors.Length < 1) // TODO: change to 2 to prevent infinite gameplay
+        if (colors.Length < 1)
         {
             Debug.LogWarning("ColorWarning: Insufficient colors set on instantiation of GameManager. Switching to defaults.");
             colors = new Color[2];
@@ -330,15 +343,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void CrashSound()
-    {
-        crashSounds.transform.position = player.transform.position;
-        crashSounds.SetActive(true);
-    }
-
     #endregion
 
-    #region Scoring Calculations
+    #region Scoring Calculations and End Game
 
     // Runs calculations to transform player's Z position into desired measurement
     void UpdateDistance()
@@ -371,8 +378,6 @@ public class GameManager : MonoBehaviour
         // Debug.Log(coins + " coins");
     }
 
-    #endregion
-
     // Updates player data at the end of the game when the player dies
     void SaveAtEndGame()
     {
@@ -385,9 +390,12 @@ public class GameManager : MonoBehaviour
         SaveSystem.SaveGame();
     }
 
+    // Add this game's distance to cumulative video ad checking distance
     private void AddToDistance()
     {
         PlayerPrefsController.SetDistanceSinceAd(distance + PlayerPrefsController.GetDistanceSinceAd());
     }
-    
+
+    #endregion
+
 }

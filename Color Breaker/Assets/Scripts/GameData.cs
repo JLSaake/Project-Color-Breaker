@@ -5,12 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
+    /*
+        Save data format for the game.
+    */
 
-    public float[] color1;
-    public float[] color2;
-    public int coins;
-    public int highScore;
-    public int[] costOfColors;
+    public float[] color1; // Player primary color
+    public float[] color2; // Player secondary color
+    public int coins; // Player total coins
+    public int highScore; // Player current high score
+    public int[] costOfColors; // Cost of each color item
 
 
     public GameData()

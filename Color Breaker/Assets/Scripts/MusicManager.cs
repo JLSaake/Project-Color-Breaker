@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
+    /*
+        Manager responsible for controling the gameplay music.
+    */
 
     [Tooltip("Music to loop during gameplay")]
     public AudioClip loopingMusic;
-    private AudioSource musicAudio;
-    private bool musicOn;
+    private AudioSource musicAudio; // Audio Source on the manager to play the looping music clip
+    private bool musicOn; // Does the player want the music on
 
-    // Start is called before the first frame update
+    // Find audio source and get player music preferences
     void Start()
     {
         musicAudio = gameObject.GetComponent<AudioSource>();
@@ -22,6 +25,8 @@ public class MusicManager : MonoBehaviour
             musicOn = false;
         }
     }
+
+    #region Play Music Logic
 
     // Starts music clip
     public void PlayMusic()
@@ -62,4 +67,6 @@ public class MusicManager : MonoBehaviour
             }
         }
     }
+
+    #endregion
 }

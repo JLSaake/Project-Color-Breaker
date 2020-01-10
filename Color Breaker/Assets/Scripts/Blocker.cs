@@ -5,16 +5,32 @@ using UnityEngine;
 
 public class Blocker : MonoBehaviour
 {
+    /*
+        Class responsible for the game logic and color of each individual blocker.
+    */
 
-    public static Color currTransColor; // Controlled in GameManager, current color of player
-    public static float playerZ = 0;
-    private int zOffset = 20;
+    #region Color Variables
+
+    [Tooltip("Current color of the player object")]
+    public static Color currTransColor; // Controlled in GameManager, the player's current color should be transparent on blockers
+    [Tooltip("Previous player color, used to see if player has changed color")]
     public Color prevTransColor; // Previous transparent color, used to see if color needs to be checked
+    [Tooltip("The color for this individual blocker duing gameplay")]
     public Color objColor; // Color for the object, set on initialization
     private Color objTransColor; // Transparent version of color for the object
-    private ParticleSystem explosionParticles;
 
+    #endregion
 
+    #region Helper Variables
+
+    [Tooltip("Current z location of the player")]
+    public static float playerZ = 0;
+    private int zOffset = 20; // How far behind the player a blocker should be before being destroyed
+    private ParticleSystem explosionParticles; // Particle system to play if the player collides with this blocker
+
+    #endregion
+
+    // Set explosion particle color to match blockers
     void Start()
     {
         explosionParticles = this.GetComponentInChildren<ParticleSystem>();
@@ -22,7 +38,7 @@ public class Blocker : MonoBehaviour
         main.startColor = objColor;
     }
 
-    // Update is called once per frame
+    // Player color and location checking
     void Update()
     {
         // Check to see if player has changed color
@@ -38,18 +54,7 @@ public class Blocker : MonoBehaviour
         }
     }
 
-    // Updates to match the current player color
-    public static void UpdateTransparentColor(Color color)
-    {
-        currTransColor = color;
-        currTransColor.a = 1;
-    }
-
-    // Updates the current position of the player for all blockers to see
-    public static void UpdatePlayerPos(float newPlayerZ)
-    {
-        playerZ = newPlayerZ;
-    }
+    #region Color Logic
 
     // Initialize the color of this blocker object
     public void SetColor(Color color)
@@ -57,6 +62,13 @@ public class Blocker : MonoBehaviour
         objColor = color;
         objColor.a = 1;
         ColorCheck();
+    }
+
+    // Updates to match the current player color
+    public static void UpdateTransparentColor(Color color)
+    {
+        currTransColor = color;
+        currTransColor.a = 1;
     }
 
     // Check to see if this blocker matches the current player color
@@ -72,9 +84,21 @@ public class Blocker : MonoBehaviour
         yield return new WaitForSeconds(0.0f);
     }
 
+    #endregion
+
+    #region Location and Explosion
+
+    // Updates the current position of the player for all blockers to see
+    public static void UpdatePlayerPos(float newPlayerZ)
+    {
+        playerZ = newPlayerZ;
+    }
+
     public void Explode()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
         explosionParticles.Play();
     }
+
+    #endregion
 }
