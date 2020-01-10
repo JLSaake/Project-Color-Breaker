@@ -12604,7 +12604,7 @@ MonoBehaviour:
   coinSound: {fileID: 8300000, guid: 07205111af2bdba40ac09914256ca146, type: 3}
   coinSource: {fileID: 223445983}
   coinParticleSystem: {fileID: 2095770380}
-  tapPromptTime: 3
+  tapPromptTime: 1
   playPanel: {fileID: 672818695}
   pausePanel: {fileID: 1678025823}
 --- !u!4 &1700736177

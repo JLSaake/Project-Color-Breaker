@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Helpers")]
     [Tooltip("Time to elapse before prompting player to tap to begin playing")]
-    public float tapPromptTime = 5.0f;
+    public float tapPromptTime = 1.0f;
     [Tooltip("Panel player taps to for gameplay")]
     public GameObject playPanel;
     [Tooltip("Panel that obscures play panel during ads and pause menu")]
