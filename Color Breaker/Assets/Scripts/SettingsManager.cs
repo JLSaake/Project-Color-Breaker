@@ -5,27 +5,41 @@ using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
+    /*
+        Handles settings menu on Main Menu scene.
+        Toggles sound and music text and icons.
+    */
 
-    //public GameObject soundEffectsButton;
+    [Header("Sound Effects")]
+    [Tooltip("Text displaying sound effect status")]
     public Text soundEffectsText;
+    [Tooltip("Image displaying sound effect status")]
     public Image soundEffectsImage;
+    [Tooltip("Sprite to dispaly when sound effects are on")]
     public Sprite soundEffectsImageOn;
+    [Tooltip("Sprite to display when sound effects are off")]
     public Sprite soundEffectsImageOff;
-    public Text musicText;
-    public Image musicImage;
-    public Sprite musicImageOn;
-    public Sprite musicImageOff;
-    public GameObject creditsDisplay;
-    //public GameObject creditsBackButton; // return from credits display back to settings
 
-    // Start is called before the first frame update
+    [Header("Music")]
+    [Tooltip("Text displaying music status")]
+    public Text musicText;
+    [Tooltip("Image displaying music status")]
+    public Image musicImage;
+    [Tooltip("Sprite to display when music is on")]
+    public Sprite musicImageOn;
+    [Tooltip("Sprite to display when music is off")]
+    public Sprite musicImageOff;
+
+    // Set sound effects and music objects to correct state
     void Start()
     {
         SetSoundEffectsText();
         SetMusicText();
     }
 
+    #region Sound Effects
 
+    // Swap sound effects current state
     public void ToggleSoundEffects()
     {
         int newSound = PlayerPrefsController.GetSoundEffects() == 1 ? 0 : 1;
@@ -33,6 +47,7 @@ public class SettingsManager : MonoBehaviour
         SetSoundEffectsText();
     }
 
+    // Set the text and icon for sound effects
     private void SetSoundEffectsText()
     {
         int currSound = PlayerPrefsController.GetSoundEffects();
@@ -48,6 +63,11 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Music
+
+    // Swap music current state
     public void ToggleMusic()
     {
         int newMusic = PlayerPrefsController.GetMusic() == 1 ? 0 : 1;
@@ -55,6 +75,7 @@ public class SettingsManager : MonoBehaviour
         SetMusicText();
     }
 
+    // Set the text and icon for music
     private void SetMusicText()
     {
         int currMusic = PlayerPrefsController.GetMusic();
@@ -70,6 +91,5 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-
-
+    #endregion
 }

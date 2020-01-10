@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class PlayerPrefsController : MonoBehaviour
 {
+    /*
+        Controler for interfacing non-sceure save data.
+        Manages sound effects and music toggling,
+        and distance for video ad playing.
+    */
+
     #region Sound Effects and Music
     // Both sound and music set to int representing bool (1: on / 0: off)
     const string SOUND_EFFECTS_KEY = "sound effects";

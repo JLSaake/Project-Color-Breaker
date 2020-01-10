@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ProceduralGenerator : MonoBehaviour
 {
+    /*
+        Generates level with blockers.
+        Has "knobs" for tweaking spawn variables.
+    */
 
     [Tooltip("Blocker prefab for generating obstacles")]
     public Blocker blocker; // Blocker prefab to generate for level
@@ -14,6 +18,7 @@ public class ProceduralGenerator : MonoBehaviour
     private int colorIndex = 0; // Index of most recently generated color
 
     #region private generation variables
+    // Variables are used for coroutine chunk generation
 
     int p_startZ;
     int p_endZ;

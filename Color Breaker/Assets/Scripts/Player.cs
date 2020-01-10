@@ -6,23 +6,36 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
+    /*
+        Player gameobject that moves throughout the gameplay scene
+    */
+
+    #region Public variables
 
     [Tooltip("Speed of the player in the Z direction")]
-    public float speed = 100; // Speed of the player
-    [Tooltip("Audio Clip to play when player dies")]
-    public AudioClip crashSound;
-    private bool isAlive = true; // Is the player currently alive
-    private bool isStarted = false; // Has the player initiated gameplay
-    private Renderer rend;
-    private MaterialPropertyBlock matBlock;
-    private ParticleSystem explosionParticles;
-    private AudioSource switchAudio;
+    public float speed = 120; // Speed of the player
     [Tooltip("Sound to play when the player switches colors")]
     public AudioClip switchClip;
+    [Tooltip("Sound to play when player strikes a blocker")]
+    public AudioClip crashSound;
+
+    #endregion
+
+    #region Helper Variables and Components
+
+    private bool isAlive = true; // Is the player currently alive
+    private bool isStarted = false; // Has the player initiated gameplay
+    private Renderer rend; // Material renderer
+    private MaterialPropertyBlock matBlock; // Material for setting the player's color
+    private ParticleSystem explosionParticles; // Particles when the player strikes a blocker
+    private AudioSource switchAudio; // Audio source to play switch color audio
+
+    #endregion
 
 
 
-    // Start is called before the first frame update
+
+    // Find and initialize components
     void Start()
     {
         rend = gameObject.GetComponent<Renderer>();
@@ -31,6 +44,7 @@ public class Player : MonoBehaviour
         switchAudio = gameObject.GetComponent<AudioSource>();
     }
 
+    // Progress the player forward
     void FixedUpdate()
     {
         if (isStarted && isAlive) // Level has begun
@@ -74,6 +88,7 @@ public class Player : MonoBehaviour
         Explode();
     }
 
+    // Effects when the player strikes an obstacle
     private void Explode()
     {
         if (PlayerPrefsController.GetSoundEffects() == 1) 
@@ -85,6 +100,7 @@ public class Player : MonoBehaviour
         explosionParticles.Play();
     }
 
+    // Set color for player explosion particles
     private void ParticleColor()
     {
         ParticleSystem.MainModule main = explosionParticles.main;
