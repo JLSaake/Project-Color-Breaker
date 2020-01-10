@@ -20,7 +20,7 @@ public class AdsController : MonoBehaviour
 
     #region Helper Variables
 
-    bool testMode = true; // For testing ads, turn off for release
+    bool testMode = false; // For testing ads, turn off (false) for release
     bool videoAdPlaying = false; // Is a video ad currently being played
 
     [Tooltip("Distance for the player to travel before triggering a video ad")]
