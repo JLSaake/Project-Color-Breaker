@@ -120,12 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &123227666 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5375335914463048026, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-    type: 3}
-  m_PrefabInstance: {fileID: 1593228849}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &206359773
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,16 +388,16 @@ MonoBehaviour:
   highScoreText: {fileID: 1321206625}
   gameOverText: {fileID: 1473800611}
   gameOverTime: 2.2
-  highScoreParticles: {fileID: 1284048440}
-  highscoreSound: {fileID: 8300000, guid: fe0926ae14fcaed45930c39a29f4be8d, type: 3}
-  tapToStartText: {fileID: 374303696}
-  tapToStartParticles: {fileID: 1397249165}
   soundButton: {fileID: 1667910605}
   soundOnSprite: {fileID: 21300000, guid: 7ab6227db5ae65d489af06882e029811, type: 3}
   soundOffSprite: {fileID: 21300000, guid: 39ac2e03a001d3a4496080b6b0034fc1, type: 3}
   musicButton: {fileID: 1197783638}
   musicOnSprite: {fileID: 21300000, guid: 096af61fd7853c94795cd8c663c89735, type: 3}
   musicOffSprite: {fileID: 21300000, guid: bf69e209370b8b746aeefd081e2802f5, type: 3}
+  highScoreParticles: {fileID: 1284048440}
+  highscoreSound: {fileID: 8300000, guid: fe0926ae14fcaed45930c39a29f4be8d, type: 3}
+  tapToStartText: {fileID: 374303696}
+  tapToStartParticles: {fileID: 1397249165}
 --- !u!4 &274940016
 Transform:
   m_ObjectHideFlags: 0
@@ -1562,7 +1556,7 @@ PrefabInstance:
     - target: {fileID: 5004442503183541628, guid: 69b8e5ec868b02c45b66e14ea611cf8b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5004442503183541628, guid: 69b8e5ec868b02c45b66e14ea611cf8b,
         type: 3}
@@ -2085,7 +2079,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1177019296
 GameObject:
@@ -12143,7 +12137,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 31, y: 0, z: 0}
 --- !u!1 &1473800610
 GameObject:
@@ -12224,75 +12218,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.0000089011, y: 400}
   m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &1593228849
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5375335914463048026, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_Name
-      value: CrashSounds
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 249.00002
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5375335914463048101, guid: f340c6cfe81ff2c4bbfdfa7caa918059,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f340c6cfe81ff2c4bbfdfa7caa918059, type: 3}
 --- !u!1 &1653852758
 GameObject:
   m_ObjectHideFlags: 0
@@ -12679,7 +12604,6 @@ MonoBehaviour:
   coinSound: {fileID: 8300000, guid: 07205111af2bdba40ac09914256ca146, type: 3}
   coinSource: {fileID: 223445983}
   coinParticleSystem: {fileID: 2095770380}
-  crashSounds: {fileID: 123227666}
   tapPromptTime: 3
   playPanel: {fileID: 672818695}
   pausePanel: {fileID: 1678025823}
