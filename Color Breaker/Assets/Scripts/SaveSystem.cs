@@ -14,7 +14,7 @@ public static class SaveSystem
     // Save the game data
     public static void SaveGame()
     {
-        Debug.Log("Saving Game ...");
+        // Debug.Log("Saving Game ...");
         GameData game = new GameData();
         BinaryFormatter formatter = new BinaryFormatter();
         FileStream stream = new FileStream(path, FileMode.Create);
